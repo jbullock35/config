@@ -2,17 +2,7 @@
 ; the "return" line will be executed at startup
 ; [2009 12 12]
 SetTitleMatchMode, 2
-GroupAdd, Eclipse, Eclipse Platform
-GroupAdd, Eclipse, eclipse-workspace
-GroupAdd, Eclipse, StatET
-GroupAdd, RStudio, ahk_exe rstudio.exe
 
-GroupAdd, R, Eclipse Platform
-GroupAdd, R, eclipse-workspace
-GroupAdd, R, StatET
-; GroupAdd, R, RStudio
-
-GroupAdd, WinEdt, WinEdt
 GroupAdd, ASCII,  Add Variable
 GroupAdd, ASCII,  Administrator: Command Prompt 
 GroupAdd, ASCII,  Command Prompt 
@@ -42,14 +32,26 @@ GroupAdd, ASCII,  Statistical Modeling
 GroupAdd, ASCII,  Windows Powershell
 GroupAdd, ASCII,  Windows Terminal
 GroupAdd, ASCII,  WinEdt
+
 GroupAdd, Acrobat, Adobe Acrobat Pro DC
+
+GroupAdd, Eclipse, Eclipse Platform
+GroupAdd, Eclipse, eclipse-workspace
+GroupAdd, Eclipse, StatET
+
 GroupAdd, Gmail,  Gmail
+
+GroupAdd, R, Eclipse Platform
+GroupAdd, R, eclipse-workspace
+GroupAdd, R, StatET
+
+GroupAdd, RStudio, ahk_exe rstudio.exe
 GroupAdd, Slack,  Slack
 GroupAdd, Stata,  Do-file Editor - 
 GroupAdd, Thunderbird, Write:
+GroupAdd, WinEdt, WinEdt
 GroupAdd, Word,   ahk_exe WINWORD.exe
 return
-
 
 
 
@@ -87,7 +89,12 @@ return
 ; keystrokes and mouse clicks.  It also explains more about hotkeys.
 
 
+
+; #####################################################################
 ; BULLOCK NOTES
+; #####################################################################
+
+; COMMAND PROMPT
 ; To make a hotkey for the command prompt, do something like this:
 ;;  Enable Ctrl-V to paste to command prompt
 ;;  #IfWinActive ahk_class ConsoleWindowClass
@@ -95,6 +102,16 @@ return
 ;;    SendInput {Raw}%clipboard%
 ;;    return
 ;;  #IfWinActive
+
+
+; CONTEXT SENSITIVITY
+; Create it with something like 
+;   #IfWinActive, ahk_group Eclipse
+; or 
+;   if WinActive("ahk_group Word") or WinActive("ahk_group Gmail")
+; and to turn it off, just use 
+;   #IfWinActive 
+; by itself.
 
 
 
@@ -164,10 +181,9 @@ SetScrollLockState, AlwaysOff
 
 ; MAKE CODE HEADINGS
 ; Shortcut for Ctrl-Shift-#.
-; The version below allows the headings to appear in the RStudio 
-; outline pane. I use it in all programs, rather than the 
-; commented-out version; in case I'll want to open a file in 
-; RStudio.  [2020 03 27]
+; The version below, with four hash marks in the middle line, 
+; allows the headings to appear in the RStudio outline pane.
+; [2020Â 03Â 27]
 #IfWinActive, ahk_group ASCII
   ^+#::
   SendInput {#}{Space}{* 74}
