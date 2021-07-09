@@ -183,7 +183,7 @@ SetScrollLockState, AlwaysOff
 ; Shortcut for Ctrl-Shift-#.
 ; The version below, with four hash marks in the middle line, 
 ; allows the headings to appear in the RStudio outline pane.
-; [2020 03 27]
+; [2020 03 27]
 #IfWinActive, ahk_group ASCII
   ^+#::
   SendInput {#}{Space}{* 74}
@@ -202,15 +202,6 @@ SetScrollLockState, AlwaysOff
 ;   SendInput {# 76}
 ;   SendInput {Up}
 ;   return
-
-
-
-; CREATE TRUE MULTIPLICATION SIGN WITH CTRL-ALT-SHIFT-X
-; We use #IfWinActive by itself to turn off context sensitivity.
-#IfWinActive
-  ^+!x::
-  Send {U+00D7}
-  return
 
 
 
@@ -259,12 +250,12 @@ SetScrollLockState, AlwaysOff
   :c*?:\"o::{U+00F6}   ;   o with diaeresis (umlaut)
 
   ; SUBSCRIPTS
-  ::_0::{U+2080}
-  ::_1 ::{U+2081}
-  ::_2::{U+2082}
-  ::_3::{U+2083}
-  ::_i::{U+1D62}
-  ::_t::{U+209C}
+  :?:_0::{U+2080}
+  :?:_1 ::{U+2081}
+  :?:_2::{U+2082}
+  :?:_3::{U+2083}
+  :?:_i::{U+1D62}
+  :?:_t::{U+209C}
 
   ; SUPERSCRIPTS
   :?*:^2::{U+00B2}
