@@ -222,20 +222,20 @@ SetScrollLockState, AlwaysOff
 ; The "*" inside the first pair of colons means "convert immediately; don't wait for an ending character"
 ;
 #if WinActive("ahk_group Word") or WinActive("ahk_group Gmail")
-  :*:\alpha::{U+0251}
-  ::\approx::{U+2248}
-  :?*:\beta::{U+03B2}
-  :*:\epsilon::{U+03B5}
+  :c*:\alpha::{U+0251}
+  :c:\approx::{U+2248}
+  :c?*:\beta::{U+03B2}
+  :c*:\epsilon::{U+03B5}
   ; ::\in::{U2208}
   ; ::\ind::{U2AEB}
   ; ::\independent::{U2AEB}
-  :*:\gamma::{U+03B3}
-  :*:\geq::{U+2265}
+  :c*:\gamma::{U+03B3}
+  :c*:\geq::{U+2265}
   :c*?:\lambda::{U+019B}
   :c*?:\leftarrow::{U+2190}
   :c*?:\leftrightarrow::{U+2194}
-  :*:\leq::{U+2264}
-  :*:\neq::{U+2260}
+  :c*:\leq::{U+2264}
+  :c*:\neq::{U+2260}
   ; ::\notin::{U+2209}
   :c*:\phi::{U+0278}
   :c*:\Phi::{U+03A6}
@@ -243,11 +243,11 @@ SetScrollLockState, AlwaysOff
   :c*:\R::{U+211D}
   :c*:\rho::{U+03C1}
   :c*?:\rightarrow::{U+2192}
-  :*:\sigma::{U+03C3}
-  :*:\sum::{U+03A3}
-  :*:\tau::{U+03C4}
-  :*:\theta::{U+03F4}
-  :*:\times::{U+00D7}
+  :c*:\sigma::{U+03C3}
+  :c*:\sum::{U+03A3}
+  :c*:\tau::{U+03C4}
+  :c*:\theta::{U+03F4}
+  :c*:\times::{U+00D7}
 
   ; ACCENTED CHARACTERS
   :c*?:\``a::{U+00E0}
