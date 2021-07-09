@@ -332,7 +332,25 @@ clean_path_in_clipboard() {
 }
 
 
+; Use the functions twice: once for the "R" group, and once for the 
+; "RStudio" group. For reasons that I don't understand, using a 
+; single call that is headed by 
+;
+;   if WinActive("ahk_group R") or WinActive("ahk_group RStudio")
+;
+; doesn't work. It also disables pasting in all applications and 
+; leads to rapid repetition of hotkeys, which in turn generates a
+; warning.  [2021Â 07Â 09]
 #IfWinActive, ahk_group R
+  ^v::
+  if (DllCall("IsClipboardFormatAvailable", "Uint", 1) OR DllCall("IsClipboardFormatAvailable", "Uint", 13)) ; if text was copied
+  {
+    clean_path_in_clipboard()
+  }
+  Send ^v
+  return	
+
+#IfWinActive, ahk_group RStudio
   ^v::
   if (DllCall("IsClipboardFormatAvailable", "Uint", 1) OR DllCall("IsClipboardFormatAvailable", "Uint", 13)) ; if text was copied
   {
@@ -345,8 +363,9 @@ clean_path_in_clipboard() {
 
 ; PASTE PLAIN TEXT WITH CTRL-SHIFT-V
 ; Unfortunately, this doesn't work when pasting into 
-; Word comment notes. [2021 04 24]
-^+v::                            ; Text–only paste from ClipBoard
+; Word comment notes. [2021 04 24]
+#IfWinActive
+^+v::                            ; TextÂ–only paste from ClipBoard
    Clip0 = %ClipBoardAll%
    ClipBoard = %ClipBoard%       ; Convert to text
    Send ^v                       ; For best compatibility: SendPlay
@@ -354,6 +373,8 @@ clean_path_in_clipboard() {
    ClipBoard = %Clip0%           ; Restore original ClipBoard
    VarSetCapacity(Clip0, 0)      ; Free memory
 Return
+
+
 
 
 ; #####################################################################
