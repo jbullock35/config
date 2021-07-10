@@ -193,75 +193,7 @@ SetScrollLockState, AlwaysOff
   SendInput {#}{Space}{* 74}
   SendInput {Up}{Left 5}
   return
-; #IfWinActive, ahk_group ASCII
-;   ^+#::
-;   SendInput {# 76}
-;   SendInput {Enter}
-;   SendInput {#}{Space}
-;   SendInput {Enter}
-;   SendInput {# 76}
-;   SendInput {Up}
-;   return
-
-
-
-; LATEX EQUIVALENTS
-; These are "hotstrings." See https://www.autohotkey.com/docs/Hotstrings.htm.
-;
-; The "c" inside the first pair of colons means "case sensitive"
-; The "?" inside the first pair of colons means "convert even when the preceding character is alphanumeric"
-; The "*" inside the first pair of colons means "convert immediately; don't wait for an ending character"
-;
-#if WinActive("ahk_group Word") or WinActive("ahk_group Gmail")
-  :c*:\alpha::{U+0251}
-  :c:\approx::{U+2248}
-  :c?*:\beta::{U+03B2}
-  :c*:\epsilon::{U+03B5}
-  ; ::\in::{U2208}
-  ; ::\ind::{U2AEB}
-  ; ::\independent::{U2AEB}
-  :c*:\gamma::{U+03B3}
-  :c*:\geq::{U+2265}
-  :c*?:\lambda::{U+019B}
-  :c*?:\leftarrow::{U+2190}
-  :c*?:\leftrightarrow::{U+2194}
-  :c*:\leq::{U+2264}
-  :c*:\neq::{U+2260}
-  ; ::\notin::{U+2209}
-  :c*:\phi::{U+0278}
-  :c*:\Phi::{U+03A6}
-  :c*:\pi::{U+03C0}
-  :c*:\R::{U+211D}
-  :c*:\rho::{U+03C1}
-  :c*?:\rightarrow::{U+2192}
-  :c*:\sigma::{U+03C3}
-  :c*:\sum::{U+03A3}
-  :c*:\tau::{U+03C4}
-  :c*:\theta::{U+03F4}
-  :c*:\times::{U+00D7}
-
-  ; ACCENTED CHARACTERS
-  :c*?:\``a::{U+00E0}
-  :c*?:\"a::{U+00E4}
-  :c*?:\'e::{U+00E9}
-  :c*?:\'I::{U+00CD}
-  :c*?:\'i::{U+00ED}
-  :c*?:\"O::{U+00D6}
-  :c*?:\"o::{U+00F6}   ;   o with diaeresis (umlaut)
-
-  ; SUBSCRIPTS
-  :?:_0::{U+2080}
-  :?:_1 ::{U+2081}
-  :?:_2::{U+2082}
-  :?:_3::{U+2083}
-  :?:_i::{U+1D62}
-  :?:_t::{U+209C}
-
-  ; SUPERSCRIPTS
-  :?*:^2::{U+00B2}
-  :?*:^3::{U+00B3}
-
-
+#IfWinActive
 
 
 ; CREATE NON-BREAKING SPACE WITH CTRL-SHIFT-SPACE
@@ -273,34 +205,6 @@ SetScrollLockState, AlwaysOff
   ^+space::
   Send {U+00A0}
   return
-
-
-; START SINGLE-CELL TABLE WITH CTRL-ALT-SHIFT-T
-^!+t::
-Send <table width="410"><tr><td>
-return
-
-
-; CLOSE SINGLE-CELL TABLE WITH CTRL-ALT-SHIFT-Y
-^!+y::
-Send </td></tr></table>
-return
-
-
-; START FANCY SINGLE-CELL TABLE WITH CTRL-ALT-SHIFT-U
-^!+u::
-Send <table width="410"><tr><td><span style="font-
-Sleep 200
-Send size: medium; font-
-Sleep 200
-Send family: 'Times New Roman';">
-return
-
-
-; CLOSE FANCY SINGLE-CELL TABLE WITH CTRL-ALT-SHIFT-I
-^!+i::
-Send </span></td></tr></table>
-return
 
 
 ; SEND EMAIL ADDRESS WITH CTRL-ALT-SHIFT-J
@@ -376,62 +280,23 @@ Return
 
 
 
+; #####################################################################
+; ACCENTED WORDS
+; #####################################################################
+; These are "hotstrings." See https://www.autohotkey.com/docs/Hotstrings.htm.
+;
+; The "c" inside the first pair of colons means "case sensitive"
+; The "?" inside the first pair of colons means "convert even when the preceding character is alphanumeric"
+; The "*" inside the first pair of colons means "convert immediately; don't wait for an ending character"
+;
+#IfWinActive
+  ::gruyere::gruyère
+
+
 
 ; #####################################################################
 ; HYPHENS AND DASHES
 ; #####################################################################
-; {ASC 0032} space
-; {ASC 0045} hyphen
-; {ASC 0095} underscore
-; {ASC 0126} tilde
-; {ASC 0150] em dash
-; {ASC 0151] em dash
-
-
-; UNDERSCORE SENDS UNDERSCORE FOR ASCII PROGRAMS, EM DASH OTHERWISE
-#IfWinActive, ahk_group ASCII
-  _::
-  Send {ASC 0095}
-  return	
-#IfWinActive, ahk_exe explorer.exe
-  _::
-  Send {ASC 0095}
-  return	
-#IfWinActive, ahk_exe ONENOTEM.EXE
-  _::
-  Send {ASC 0095}
-  return	
-#IfWinActive, ahk_group Thunderbird
-  _::
-  Send {ASC 0151}
-  return	
-#IfWinActive
-  _::
-  Send {ASC 0151}
-  return	
-
-
-; HYPHEN SENDS HYPHEN FOR ASCII PROGRAMS, EN DASH OTHERWISE
-#IfWinActive, ahk_group ASCII
-  -::
-  Send {ASC 0045}
-  return
-#IfWinActive
-  -::
-  Send {ASC 0150}
-  return
-
-
-; TILDE SENDS TILDE FOR ASCII PROGRAMS, HYPHEN OTHERWISE
-#IfWinActive, ahk_group ASCII
-  +`::
-  Send {ASC 0126}
-  return
-#IfWinActive
-  +`::
-  Send {ASC 0045}
-  return
-
 
 ; CTRL-ALT-HYPHEN SENDS NON-BREAKING HYPHEN
 ^!-::
@@ -612,6 +477,120 @@ NumpadSub::
   ^+!z::
   Send https://northwestern.zoom.us/j/9431220423
   return
+
+
+
+; **************************************************************************
+; HTML SHORTCUTS ####
+; **************************************************************************
+
+; START SINGLE-CELL TABLE WITH CTRL-ALT-SHIFT-T
+^!+t::
+Send <table width="410"><tr><td>
+return
+
+
+; CLOSE SINGLE-CELL TABLE WITH CTRL-ALT-SHIFT-Y
+^!+y::
+Send </td></tr></table>
+return
+
+
+; START FANCY SINGLE-CELL TABLE WITH CTRL-ALT-SHIFT-U
+^!+u::
+Send <table width="410"><tr><td><span style="font-
+Sleep 200
+Send size: medium; font-
+Sleep 200
+Send family: 'Times New Roman';">
+return
+
+
+; CLOSE FANCY SINGLE-CELL TABLE WITH CTRL-ALT-SHIFT-I
+^!+i::
+Send </span></td></tr></table>
+return
+
+
+
+; #####################################################################
+; LATEX EQUIVALENTS
+; #####################################################################
+
+; These are "hotstrings." See https://www.autohotkey.com/docs/Hotstrings.htm.
+;
+; The "c" inside the first pair of colons means "case sensitive"
+; The "?" inside the first pair of colons means "convert even when the preceding character is alphanumeric"
+; The "*" inside the first pair of colons means "convert immediately; don't wait for an ending character"
+;
+; #if WinActive("ahk_group Word") or WinActive("ahk_group Gmail")
+  :c*:\alpha::{U+0251}
+  :c:\approx::{U+2248}
+  :c?*:\beta::{U+03B2}
+  :c*:\epsilon::{U+03B5}
+  ; ::\in::{U2208}
+  ; ::\ind::{U2AEB}
+  ; ::\independent::{U2AEB}
+  :c*:\gamma::{U+03B3}
+  :c*:\geq::{U+2265}
+  :c*?:\lambda::{U+019B}
+  :c*?:\leftarrow::{U+2190}
+  :c*?:\leftrightarrow::{U+2194}
+  :c*:\leq::{U+2264}
+  :c*:\neq::{U+2260}
+  ; ::\notin::{U+2209}
+  :c*:\phi::{U+0278}
+  :c*:\Phi::{U+03A6}
+  :c*:\pi::{U+03C0}
+  :c*:\R::{U+211D}
+  :c*:\rho::{U+03C1}
+  :c*?:\rightarrow::{U+2192}
+  :c*:\sigma::{U+03C3}
+  :c*:\sum::{U+03A3}
+  :c*:\tau::{U+03C4}
+  :c*:\theta::{U+03F4}
+  :c*:\times::{U+00D7}
+
+  ; ACCENTED CHARACTERS
+  :c*?:\``a::{U+00E0}
+  :c*?:\"a::{U+00E4}
+  :c*?:\'e::{U+00E9}
+  :c*?:\'I::{U+00CD}
+  :c*?:\'i::{U+00ED}
+  :c*?:\"O::{U+00D6}
+  :c*?:\"o::{U+00F6}   ;   o with diaeresis (umlaut)
+
+  ; HYPHENS AND DASHES
+  ; The trick here is to have a shortcut or shortcuts
+  ; that convert -- to an en dash *and* that convert
+  ; --- to an em dash. See 
+  ; https://www.autohotkey.com/boards/viewtopic.php?f=76&t=92474 
+  ; for more on the problem and this solution.
+  ;
+  #InstallKeybdHook                          ; permit AutoHotKey to look back at previous key presses
+  :?*X:--::Send, {ASC 0150}                  ; send en dash
+  #IF A_PriorHotKey A_PriorKey = ":?*X:---"
+    :?*X:-::Send, {Bs}{ASC 0151}             ; send em dash
+  #IF                                        ; end context sensitivity
+    ; Old attempts. Either works on its own, 
+    ; but when both are enabled, the one for 
+    ; the em dash doesn't work: 
+      ; :?*:--::{ASC 0150}   ; en dash
+      ; :?*:---::{ASC 0151}  ; em dash
+
+
+
+  ; SUBSCRIPTS
+  :?:_0::{U+2080}
+  :?:_1 ::{U+2081}
+  :?:_2::{U+2082}
+  :?:_3::{U+2083}
+  :?:_i::{U+1D62}
+  :?:_t::{U+209C}
+
+  ; SUPERSCRIPTS
+  :?*:^2::{U+00B2}
+  :?*:^3::{U+00B3}
 
 
 
