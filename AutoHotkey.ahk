@@ -290,7 +290,36 @@ Return
 ; The "*" inside the first pair of colons means "convert immediately; don't wait for an ending character"
 ;
 #IfWinActive
-  ::gruyere::gruyère
+  ::a la::{U+00E0} la
+  ::Aaroe::Aar{U+00F8}e
+  ::cafe::caf{U+00E9}
+  :c:Castaneda::Casta{U+00F1}eda
+  :c:Chimayo::Chimay{U+00F3}
+  :c:Comte::Comt{U+00E9}
+  :*:consomme::consomm{U+00E9}
+  :*:crepe::cr{U+00E9}pe
+  :c:Espanol::Espa{U+00F1}ol
+  :c:Espanola::Espa{U+00F1}ola
+  ::fiance::fianc{U+00E9}
+  ::gruyere::gruy{U+00E8}re
+  :c:Jorg::J{U+00F6}rg
+  ::pinon::pi{U+00F1}on
+  ::puree::pur{U+00E9}e
+  ::saute::saut{U+00E9}
+  ::sauteed::saut{U+00E9}ed
+  ::sauteing::saut{U+00E9}ing
+
+
+
+; #####################################################################
+; FRACTIONS
+; #####################################################################
+#If !WinActive("ahk_exe WindowsTerminal.exe") && !WinActive("ahk_group Eclipse") && !WinActive("ahk_group RStudio")  
+  ::1/2::{U+00BD}
+  ::1/3::{U+2153}
+  ::1/4::{U+00BC}
+  ::2/3::{U+2154}
+  ::3/4::{U+00BE}
 
 
 
@@ -526,7 +555,7 @@ return
 ; #if WinActive("ahk_group Word") or WinActive("ahk_group Gmail")
   :c*:\alpha::{U+0251}
   :c:\approx::{U+2248}
-  :c?*:\beta::{U+03B2}
+  :c?*:\beta::{U+03B2} 
   :c*:\epsilon::{U+03B5}
   ; ::\in::{U2208}
   ; ::\ind::{U2AEB}
@@ -557,6 +586,8 @@ return
   :c*?:\'e::{U+00E9}
   :c*?:\'I::{U+00CD}
   :c*?:\'i::{U+00ED}
+  :c*?:\~n::{U+00F1}
+  :c*?:\'o::{U+00F3}
   :c*?:\"O::{U+00D6}
   :c*?:\"o::{U+00F6}   ;   o with diaeresis (umlaut)
 
@@ -567,16 +598,19 @@ return
   ; https://www.autohotkey.com/boards/viewtopic.php?f=76&t=92474 
   ; for more on the problem and this solution.
   ;
-  #InstallKeybdHook                          ; permit AutoHotKey to look back at previous key presses
-  :?*X:--::Send, {ASC 0150}                  ; send en dash
-  #IF A_PriorHotKey A_PriorKey = ":?*X:---"
-    :?*X:-::Send, {Bs}{ASC 0151}             ; send em dash
-  #IF                                        ; end context sensitivity
-    ; Old attempts. Either works on its own, 
-    ; but when both are enabled, the one for 
-    ; the em dash doesn't work: 
-      ; :?*:--::{ASC 0150}   ; en dash
-      ; :?*:---::{ASC 0151}  ; em dash
+  ; IfWinNotActive ahk_exe WindowsTerminal.exe
+  #If !WinActive("ahk_exe WindowsTerminal.exe") && !WinActive("ahk_group Eclipse")
+    #InstallKeybdHook                          ; permit AutoHotKey to look back at previous key presses
+    :?*X:--::Send, {ASC 0150}                  ; send en dash
+    #IF A_PriorHotKey A_PriorKey = ":?*X:---"
+      :?*X:-::Send, {Bs}{ASC 0151}             ; send em dash
+    #IF                                        ; end context sensitivity
+  #IfWinActive
+      ; Old attempts. Either works on its own, 
+      ; but when both are enabled, the one for 
+      ; the em dash doesn't work: 
+        ; :?*:--::{ASC 0150}   ; en dash
+        ; :?*:---::{ASC 0151}  ; em dash
 
 
 
