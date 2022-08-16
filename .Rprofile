@@ -38,7 +38,9 @@ local({
 # [2020 06 26]
 #
 # The policy below is like options(conflicts.policy = "depends.ok"), except that it 
-# adds, to "can.mask", the packages after "stats".  [2020 06 27]
+# adds, to "can.mask", the packages after "stats". The "mask.ok" argument means "it's 
+# OK for this package's command to mask objects that are already on the search path."
+# [2020 06 27, 2021 12 01]
 options(conflicts.policy = list(
   error = TRUE,
   generics.ok = TRUE,
@@ -71,6 +73,7 @@ conflictRules("magrittr",   exclude = c("set_names", "extract"))
 conflictRules("MASS",       exclude = "select")    
 conflictRules("Matrix",     exclude = c("expand", "pack", "unpack"))
 conflictRules("purrr",      exclude = "is_null")                                 # interferes with testthat::test_dir
+conflictRules("scales",     exclude = c("discard", "col_factor", "rescale"))      
 conflictRules("testthat",   exclude = c("equals", "is_less_than", "matches", "not", "test_file"))  # we'll get test_file() from dplyr and devtools
 
 
