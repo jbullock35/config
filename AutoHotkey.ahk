@@ -132,7 +132,11 @@ return
 ; All else: use Unicode non-breaking spaces
 #IfWinActive, ahk_group Eclipse
   ^!+d::
-  Send [%A_YYYY% %A_MM% %A_DD%]
+  Send [%A_YYYY% 
+  Sleep 100
+  Send %A_MM% 
+  Sleep 100 
+  Send %A_DD%]
   return
 #IfWinActive, ahk_group RStudio
   ^!+d::
@@ -190,6 +194,7 @@ SetScrollLockState, AlwaysOff
   SendInput {Enter}
   SendInput {#}{Space}{space}{# 4}
   SendInput {Enter}
+  Sleep 250
   SendInput {#}{Space}{* 74}
   SendInput {Up}{Left 5}
   return
@@ -280,6 +285,11 @@ Return
 
 
 
+; INSERT TYPOGRAPHIC RIGHT SINGLE QUOTE
+:c?*:\rsquo::{U+2019}
+
+
+
 ; #####################################################################
 ; ACCENTED WORDS
 ; #####################################################################
@@ -292,22 +302,33 @@ Return
 #IfWinActive
   ::a la::{U+00E0} la
   ::Aaroe::Aar{U+00F8}e
+  ::brulee::br{U+00FB}l{U+00E9}e
   ::cafe::caf{U+00E9}
   :c:Castaneda::Casta{U+00F1}eda
   :c:Chimayo::Chimay{U+00F3}
+  :*:cliche::clich{U+00E9}
   :c:Comte::Comt{U+00E9}
   :*:consomme::consomm{U+00E9}
   :*:crepe::cr{U+00E9}pe
+  :*:divorcee::divorc{U+00E9}e
   :c:Espanol::Espa{U+00F1}ol
   :c:Espanola::Espa{U+00F1}ola
   ::fiance::fianc{U+00E9}
+  ::Fjallraven::Fj{U+00E4}llr{U+00E4}ven
+  ::Guantanamo::Guant{U+00E1}namo
   ::gruyere::gruy{U+00E8}re
+  :c:Haagen-Dasz::H{U+00E4}agen-Dasz
   :c:Jorg::J{U+00F6}rg
+  :*:naivete::naivet{U+00E9}
+  :c:nee::n{U+00E9}e
   ::pinon::pi{U+00F1}on
   ::puree::pur{U+00E9}e
+  ::revee::r{U+00EA}v{U+00E9}e
+  ::Rocio::Roc{U+00ED}o
   ::saute::saut{U+00E9}
   ::sauteed::saut{U+00E9}ed
   ::sauteing::saut{U+00E9}ing
+  ::soiree::soir{U+00E9}e
 
 
 
@@ -318,7 +339,8 @@ Return
   ::1/2::{U+00BD}
   ::1/3::{U+2153}
   ::1/4::{U+00BC}
-  ::2/3::{U+2154}
+  ::1/8::{U+215B}
+  ::2/3::{U+2154}   
   ::3/4::{U+00BE}
 
 
@@ -504,7 +526,7 @@ NumpadSub::
 ;if WinActive("ahk_group Gmail")
 #IfWinActive
   ^+!z::
-  Send https://northwestern.zoom.us/j/9431220423
+  Send https://northwestern.zoom.us/my/jgbullock
   return
 
 
@@ -556,6 +578,7 @@ return
   :c*:\alpha::{U+0251}
   :c:\approx::{U+2248}
   :c?*:\beta::{U+03B2} 
+  :c?*:\degree::{U+00B0}
   :c*:\epsilon::{U+03B5}
   ; ::\in::{U2208}
   ; ::\ind::{U2AEB}
@@ -566,6 +589,7 @@ return
   :c*?:\leftarrow::{U+2190}
   :c*?:\leftrightarrow::{U+2194}
   :c*:\leq::{U+2264}
+  :c*?:\mu::{U+03BC}
   :c*:\neq::{U+2260}
   ; ::\notin::{U+2209}
   :c*:\phi::{U+0278}
@@ -574,16 +598,17 @@ return
   :c*:\R::{U+211D}
   :c*:\rho::{U+03C1}
   :c*?:\rightarrow::{U+2192}
-  :c*:\sigma::{U+03C3}
+  :c*?:\sigma::{U+03C3}
   :c*:\sum::{U+03A3}
   :c*:\tau::{U+03C4}
   :c*:\theta::{U+03F4}
   :c*:\times::{U+00D7}
 
   ; ACCENTED CHARACTERS
-  :c*?:\``a::{U+00E0}
+  :c*?:\'a::{U+00E1}  
   :c*?:\"a::{U+00E4}
   :c*?:\'e::{U+00E9}
+  :c*?:\'E::{U+00C9}
   :c*?:\'I::{U+00CD}
   :c*?:\'i::{U+00ED}
   :c*?:\~n::{U+00F1}
@@ -599,7 +624,7 @@ return
   ; for more on the problem and this solution.
   ;
   ; IfWinNotActive ahk_exe WindowsTerminal.exe
-  #If !WinActive("ahk_exe WindowsTerminal.exe") && !WinActive("ahk_group Eclipse")
+  #If !WinActive("ahk_exe WindowsTerminal.exe") && !WinActive("ahk_group Eclipse") && !WinActive("ahk_group RStudio") &&!WinActive("ahk_exe WinEdt.exe")
     #InstallKeybdHook                          ; permit AutoHotKey to look back at previous key presses
     :?*X:--::Send, {ASC 0150}                  ; send en dash
     #IF A_PriorHotKey A_PriorKey = ":?*X:---"
@@ -616,7 +641,7 @@ return
 
   ; SUBSCRIPTS
   :?:_0::{U+2080}
-  :?:_1 ::{U+2081}
+  :?:_1::{U+2081}
   :?:_2::{U+2082}
   :?:_3::{U+2083}
   :?:_i::{U+1D62}
