@@ -1,0 +1,31 @@
+# As of 2022 August 19, this file is located in 
+# C:\users\jbullock\OneDrive\config. A hardlink  
+# connects the file to its R-default location, 
+# c:\users\jbullock. It is sourced from that 
+# location by Rgui, StatET, and RStudio. [2022 08 19]
+
+# SET TIME ZONE
+TZ = America/Chicago
+
+
+# ADD PATH TO RTOOLS 4.0
+PATH="${RTOOLS40_HOME}\usr\bin;${PATH}"
+
+
+# THROW ERRORS WHEN USING IF() OR WHILE() WITH VECTORS
+# Supported only from R 3.6.0
+# See https://cran.r-project.org/doc/manuals/r-devel/R-ints.html#Tools
+# If this variable is unset, if() and while() will just 
+# silently take only the first value of the object that
+# they receive.  [2020 01 16]
+_R_CHECK_LENGTH_1_CONDITION_ = TRUE
+
+
+# THROW ERRORS WHEN USING SCALAR OPERATORS (&& OR ||) WITH VECTOR DATA
+# Supported only from R 3.6.0
+# See https://blog.revolutionanalytics.com/2018/10/a-small-logical-change-with-big-impact.html
+# See https://cran.r-project.org/doc/manuals/r-devel/R-ints.html#Tools
+# If this variable is unset, && and || will silently 
+# take only the first value of the object that
+# they receive.  [2020 01 16]
+_R_CHECK_LENGTH_1_LOGIC2_ = TRUE
