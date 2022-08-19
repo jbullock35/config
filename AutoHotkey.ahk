@@ -41,6 +41,9 @@ GroupAdd, Eclipse, StatET
 
 GroupAdd, Gmail,  Gmail
 
+GroupAdd, LaTeX, Overleaf
+GroupAdd, LaTeX, WinEdt
+
 GroupAdd, R, Eclipse Platform
 GroupAdd, R, eclipse-workspace
 GroupAdd, R, StatET
@@ -575,46 +578,50 @@ return
 ; The "*" inside the first pair of colons means "convert immediately; don't wait for an ending character"
 ;
 ; #if WinActive("ahk_group Word") or WinActive("ahk_group Gmail")
-  :c*:\alpha::{U+0251}
-  :c:\approx::{U+2248}
-  :c?*:\beta::{U+03B2} 
-  :c?*:\degree::{U+00B0}
-  :c*:\epsilon::{U+03B5}
-  ; ::\in::{U2208}
-  ; ::\ind::{U2AEB}
-  ; ::\independent::{U2AEB}
-  :c*:\gamma::{U+03B3}
-  :c*:\geq::{U+2265}
-  :c*?:\lambda::{U+019B}
-  :c*?:\leftarrow::{U+2190}
-  :c*?:\leftrightarrow::{U+2194}
-  :c*:\leq::{U+2264}
-  :c*?:\mu::{U+03BC}
-  :c*:\neq::{U+2260}
-  ; ::\notin::{U+2209}
-  :c*:\phi::{U+0278}
-  :c*:\Phi::{U+03A6}
-  :c*:\pi::{U+03C0}
-  :c*:\R::{U+211D}
-  :c*:\rho::{U+03C1}
-  :c*?:\rightarrow::{U+2192}
-  :c*?:\sigma::{U+03C3}
-  :c*:\sum::{U+03A3}
-  :c*:\tau::{U+03C4}
-  :c*:\theta::{U+03F4}
-  :c*:\times::{U+00D7}
+  #If !WinActive("ahk_group LaTeX") 
+    :c*:\alpha::{U+0251}
+    :c:\approx::{U+2248}
+    :c?*:\beta::{U+03B2} 
+    :c?*:\degree::{U+00B0}
+    :c*:\epsilon::{U+03B5}
+    ; ::\in::{U2208}
+    ; ::\ind::{U2AEB}
+    ; ::\independent::{U2AEB}
+    :c*:\gamma::{U+03B3}
+    :c*:\geq::{U+2265}
+    :c*?:\lambda::{U+019B}
+    :c*?:\leftarrow::{U+2190}
+    :c*?:\leftrightarrow::{U+2194}
+    :c*:\leq::{U+2264}
+    :c*?:\mu::{U+03BC}
+    :c*:\neq::{U+2260}
+    ; ::\notin::{U+2209}
+    :c*:\phi::{U+0278}
+    :c*:\Phi::{U+03A6}
+    :c*:\pi::{U+03C0}
+    :c*:\R::{U+211D}
+    :c*:\rho::{U+03C1}
+    :c*?:\rightarrow::{U+2192}
+    :c*?:\sigma::{U+03C3}
+    :c*:\sum::{U+03A3}
+    :c*:\tau::{U+03C4}
+    :c*:\theta::{U+03F4}
+    :c*:\times::{U+00D7}
 
-  ; ACCENTED CHARACTERS
-  :c*?:\'a::{U+00E1}  
-  :c*?:\"a::{U+00E4}
-  :c*?:\'e::{U+00E9}
-  :c*?:\'E::{U+00C9}
-  :c*?:\'I::{U+00CD}
-  :c*?:\'i::{U+00ED}
-  :c*?:\~n::{U+00F1}
-  :c*?:\'o::{U+00F3}
-  :c*?:\"O::{U+00D6}
-  :c*?:\"o::{U+00F6}   ;   o with diaeresis (umlaut)
+    ; ACCENTED CHARACTERS
+    :c*?:\'a::{U+00E1}  
+    :c*?:\"a::{U+00E4}
+    :c*?:\'e::{U+00E9}
+    :c*?:\'E::{U+00C9}
+    :c*?:\'I::{U+00CD}
+    :c*?:\'i::{U+00ED}
+    :c*?:\~n::{U+00F1}
+    :c*?:\'o::{U+00F3}
+    :c*?:\"O::{U+00D6}
+    :c*?:\"o::{U+00F6}   ;   o with diaeresis (umlaut)
+  #IfWinActive
+
+  
 
   ; HYPHENS AND DASHES
   ; The trick here is to have a shortcut or shortcuts
@@ -624,7 +631,7 @@ return
   ; for more on the problem and this solution.
   ;
   ; IfWinNotActive ahk_exe WindowsTerminal.exe
-  #If !WinActive("ahk_exe WindowsTerminal.exe") && !WinActive("ahk_group Eclipse") && !WinActive("ahk_group RStudio") &&!WinActive("ahk_exe WinEdt.exe")
+  #If !WinActive("ahk_exe WindowsTerminal.exe") && !WinActive("ahk_group Eclipse") && !WinActive("ahk_group LaTeX") && !WinActive("ahk_group RStudio") &&!WinActive("ahk_exe WinEdt.exe")
     #InstallKeybdHook                          ; permit AutoHotKey to look back at previous key presses
     :?*X:--::Send, {ASC 0150}                  ; send en dash
     #IF A_PriorHotKey A_PriorKey = ":?*X:---"
@@ -640,16 +647,18 @@ return
 
 
   ; SUBSCRIPTS
-  :?:_0::{U+2080}
-  :?:_1::{U+2081}
-  :?:_2::{U+2082}
-  :?:_3::{U+2083}
-  :?:_i::{U+1D62}
-  :?:_t::{U+209C}
+  #If !WinActive("ahk_group LaTeX") 
+    :?:_0::{U+2080}
+    :?:_1::{U+2081}
+    :?:_2::{U+2082}
+    :?:_3::{U+2083}
+    :?:_i::{U+1D62}
+    :?:_t::{U+209C}
 
-  ; SUPERSCRIPTS
-  :?*:^2::{U+00B2}
-  :?*:^3::{U+00B3}
+    ; SUPERSCRIPTS
+    :?*:^2::{U+00B2}
+    :?*:^3::{U+00B3}
+  #IfWinActive
 
 
 
