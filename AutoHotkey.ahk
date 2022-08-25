@@ -29,6 +29,7 @@ GroupAdd, ASCII,  Save As
 GroupAdd, ASCII,  Save Attachment
 GroupAdd, ASCII,  SecureCRT
 GroupAdd, ASCII,  Statistical Modeling
+GroupAdd, ASCII,  Sublime Text
 GroupAdd, ASCII,  Windows Powershell
 GroupAdd, ASCII,  Windows Terminal
 GroupAdd, ASCII,  WinEdt
@@ -54,11 +55,50 @@ GroupAdd, Stata,  Do-file Editor -
 GroupAdd, Thunderbird, Write:
 GroupAdd, WinEdt, WinEdt
 GroupAdd, Word,   ahk_exe WINWORD.exe
+
+
+
+; #####################################################################
+; OUTLOOK SHORTCUTS
+; #####################################################################
+
+; When revising a calendar invite, change default option to 
+; "Save changes but don't send." This chnage makes it a little 
+; easier to save private notes. For details on the implementation,
+; see https://www.autohotkey.com/boards/viewtopic.php?f=76&t=107579.
+; [2022 08 23]
+;
+; Unlike hotkey and hotstring definitions, this code block won't be 
+; executed unless it is in the "auto-execute" section at the start
+; of the script. See the URL above and the "auto-execute" entry in 
+; the AutoHotkey help file for more details.  [2022 08 25]
+OutlookDialogBoxTitle = Microsoft Outlook
+Loop {
+ WinWaitActive, %OutlookDialogBoxTitle%
+ ; Send !b
+ Control, Check,, Button2
+ ; SoundBeep, 1500
+ WinWaitNotActive
+ ; SoundBeep, 1000
+}
+
+
+
+; **************************************************************************
+; END THE AUTO-EXECUTE SECTION ####
+; **************************************************************************
+; See https://www.autohotkey.com/boards/viewtopic.php?f=76&t=107579 and 
+; the "auto-execute" entry in the AutoHotkey help file for more details.
+; In short, it's probably best if everything after this point is either 
+; a hotkey or a hotstring.  [2022 08 25]
 return
 
 
 
 
+; #####################################################################
+; NOTES THAT CAME WITH AUTOHOTKEY
+; #####################################################################
 ; IMPORTANT INFO ABOUT GETTING STARTED: Lines that start with a
 ; semicolon, such as this one, are comments.  They are not executed.
 
@@ -277,7 +317,7 @@ clean_path_in_clipboard() {
 ; Unfortunately, this doesn't work when pasting into 
 ; Word comment notes. [2021 04 24]
 #IfWinActive
-^+v::                            ; TextÂ–only paste from ClipBoard
+^+v::                            ; Text–only paste from ClipBoard
    Clip0 = %ClipBoardAll%
    ClipBoard = %ClipBoard%       ; Convert to text
    Send ^v                       ; For best compatibility: SendPlay
@@ -659,6 +699,8 @@ return
     :?*:^2::{U+00B2}
     :?*:^3::{U+00B3}
   #IfWinActive
+
+
 
 
 
