@@ -167,8 +167,12 @@ return
 ^!+=::Suspend
 
 
+; SEND UTC DATE WITH NON-BREAKING HYPHENS (CTRL-ALT-D)
+^!d::Send %A_YYYY%{U+2011}%A_MM%{U+2011}%A_DD%
 
-; SEND DATE IN BRACKETS (CTRL-ALT-SHIFT D)
+
+
+; SEND DATE IN BRACKETS (CTRL-ALT-SHIFT-D)
 ; Eclipse:  use spaces
 ; RStudio:  use spaces
 ; WinEdt:   use tildes
