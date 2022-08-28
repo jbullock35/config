@@ -74,7 +74,7 @@ GroupAdd, Word,   ahk_exe WINWORD.exe
 ; the AutoHotkey help file for more details.  [2022 08 25]
 OutlookDialogBoxTitle = Microsoft Outlook
 Loop {
- WinWaitActive, %OutlookDialogBoxTitle%
+ WinWaitActive, %OutlookDialogBoxTitle%, Save changes &but don't send
  ; Send !b
  Control, Check,, Button2
  ; SoundBeep, 1500
@@ -169,7 +169,6 @@ return
 
 ; SEND UTC DATE WITH NON-BREAKING HYPHENS (CTRL-ALT-D)
 ^!d::Send %A_YYYY%{U+2011}%A_MM%{U+2011}%A_DD%
-
 
 
 ; SEND DATE IN BRACKETS (CTRL-ALT-SHIFT-D)
