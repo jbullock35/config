@@ -1,0 +1,24 @@
+! 2022-08-13 https://fb.workplace.com
+||cdn.fbsbx.com/v/t59.2708-21/271354185_266864085379240_6166617603444764225_n.gif?_nc_cat=106&ccb=1-7&_nc_sid=041f46&_nc_ohc=yrsPeZt1mH4AX8RvycX&_nc_ht=cdn.fbsbx.com&oh=03_AVJUimF-8wUlxK0EMfhJBW9mlE3iSnxXD9zI1ycz2oMcvg&oe=62F8C508$image
+||external-ort2-1.xx.fbcdn.net/emg1/v/t13/4123560813153362498?url=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2F3o6MboJJrrATBcpua4%2Fgiphy.gif%3Fcid%3D790b7611e2b6266a72cac602f357298214054a5c78870fa5%26rid%3Dgiphy.gif%26ct%3Dg&fb_obo=1&utld=giphy.com&stp=dst-gif_q75&ccb=13-1&oh=00_AT9-hxbEFoW2SZ5U9q_JbFqw9_WrUTQky9FwgAeXrS3QUg&oe=62F8B94B&_nc_sid=9cf138$image
+
+! 2022-08-18 https://fb.workplace.com
+||scontent-iad3-2.xx.fbcdn.net/v/t42.4659-2/11770812_830984663688153_500362699_n.mp4?_nc_cat=101&ccb=1-7&_nc_sid=73e57b&_nc_ohc=W914X6goR0kAX9fijam&_nc_ht=scontent-iad3-2.xx&oh=00_AT-TryKnTDms232qgvCjLC-Brgchl7hF8SxIn4ZO7Kjoww&oe=62FFB0E7$media
+
+! 2022-08-21 https://giphy.com
+||media2.giphy.com/media/tsX3YMWYzDPjAARfeg/100w.*?cid=ecf05e47rj2wwkljyqncx8fwyaudsgewmfyrv6txtxwfmfvi&rid=100w.*&ct=g$image
+media*.giphy.com
+
+! Other GIF-blocking rules
+##video[aria-label^="GIF"]
+##video div[aria-label^="GIF"]
+
+! It's tricky because I need to block <video> if its *next sibling* has a descendant div that has [aria-label="Pause GIF"]
+! See https://help.eyeo.com/en/adblockplus/how-to-write-filters#elemhide_attributes > "Attribute selectors" for help writing rules.  [2022 08 27]
+fb.workplace.com##video:has(+ div:has(div[aria-label*="GIF"]))
+! ##div[aria-label="Play GIF"]
+! ##div[aria-label="Pause GIF"]
+
+! 2022-08-24 https://fb.workplace.com
+||video-ort2-1.xx.fbcdn.net/v/t42.4659-2/19189795_1248333991962906_983867537387159552_n.mp4?_nc_cat=105&ccb=1-7&_nc_sid=73e57b&_nc_ohc=_Eq4o04mOcoAX_3lRxM&_nc_ht=video-ort2-1.xx&oh=00_AT_n3u-W96LROoM4iYk0XMsBfqTkufoDyiTMvnEis7uLyQ&oe=630579E7$media
+
