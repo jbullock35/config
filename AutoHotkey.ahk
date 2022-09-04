@@ -626,6 +626,7 @@ return
     :c:\approx::{U+2248}
     :c?*:\beta::{U+03B2} 
     :c?*:\degree::{U+00B0}
+    :c?*:\Delta::{U+0394}
     :c*:\epsilon::{U+03B5}
     ; ::\in::{U2208}
     ; ::\ind::{U2AEB}
@@ -642,6 +643,7 @@ return
     :c*:\phi::{U+0278}
     :c*:\Phi::{U+03A6}
     :c*:\pi::{U+03C0}
+    :c*:\pm::{U+00B1}
     :c*:\R::{U+211D}
     :c*:\rho::{U+03C1}
     :c*?:\rightarrow::{U+2192}
@@ -704,6 +706,14 @@ return
   #IfWinActive
 
 
+
+; #####################################################################
+; ONENOTE SHORTCUTS
+; #####################################################################
+; Launch "What I Did" -- a daily log.  [2022 08 30]
+^!+w::
+  Run "C:\Users\johnbullock\Documents\config\What I did.lnk"
+  return
 
 
 
