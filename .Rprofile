@@ -35,12 +35,12 @@ local({
 # It offers some additional protection against function-name 
 # conflicts. See ?conflictRules and 
 # https://developer.r-project.org/Blog/public/2019/03/19/managing-search-path-conflicts/.
-# [2020 06 26]
+# [2020Â 06Â 26]
 #
 # The policy below is like options(conflicts.policy = "depends.ok"), except that it 
 # adds, to "can.mask", the packages after "stats". The "mask.ok" argument means "it's 
 # OK for this package's command to mask objects that are already on the search path."
-# [2020 06 27, 2021 12 01]
+# [2020Â 06Â 27, 2021 12 01]
 options(conflicts.policy = list(
   error = TRUE,
   generics.ok = TRUE,
@@ -61,7 +61,7 @@ conflictRules(
 
 
 # Don't let the following commands mask or conflict with the corresponding 
-# tidyverse commands.  [2020 06 27]
+# tidyverse commands.  [2020Â 06Â 27]
 conflictRules("arm",        exclude = "rescale")   
 conflictRules("car",        exclude = "recode")                                  # use Recode() instead
 conflictRules("gridExtra",  exclude = "combine")   
@@ -89,9 +89,9 @@ options(width = 210)  # for big monitors
   # If that is the problem, I can solve it by 
   # copying Rconsole to my home directory and
   # changing the columns line to specify 155
-  # columns.  [2020�01�16]
+  # columns.  [2020 01 16]
   #   See https://rdrr.io/r/utils/Rconsole.html
-  # for details.  [2020�01�16]
+  # for details.  [2020 01 16]
 options(digits = 3)
 options(max.print = 1000)          # Never print more than 1000 values to the screen
 options(scipen = 4)                # two-character bias against scientific notation
@@ -135,5 +135,5 @@ options(todor_patterns = "TO DO")  # For the todor package / RStudio add-in
 
 # ADD CHECKING FOR PARALLEL CORES
 # Recommended in a message that I get when I load rstan. rstan is slow
-# by default; perhaps this will help.  [2020 08 17]
+# by default; perhaps this will help.  [2020Â 08Â 17]
 options(mc.cores = parallel::detectCores())
