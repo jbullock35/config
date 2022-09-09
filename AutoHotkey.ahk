@@ -710,9 +710,19 @@ return
 ; #####################################################################
 ; ONENOTE SHORTCUTS
 ; #####################################################################
-; Launch "What I Did" -- a daily log.  [2022 08 30]
+; See https://superuser.com/questions/1738995/ for a bit more on this 
+; issue. I use the solution that another commenter offered, except that
+; I'm not linking to specific paragraphs.  [2022 09 09]
+
+; Launch "Assign" scratchpad.
+^!+a::
+  Run "C:\Users\johnbullock\Documents\config\Assign.url"
+  return
+
+
+; Launch daily log.  [2022 08 30]
 ^!+w::
-  Run "C:\Users\johnbullock\Documents\config\What I did.lnk"
+  Run "C:\Users\johnbullock\Documents\config\What I did.url"
   return
 
 
