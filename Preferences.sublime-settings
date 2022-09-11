@@ -1,0 +1,40 @@
+// Settings in here override those in "Default/Preferences.sublime-settings",
+// and are overridden in turn by syntax-specific settings.
+
+// The "master" version of this file now resides in my "config" directory and 
+// is in my Github repo. I've hard-linked it to the default location,
+// ~\AppData\Roaming\Sublime Text\Packages\User\Preferences.sublime-settings
+
+{
+	"draw_unicode_white_space": "none",
+
+	"font_size": 11,
+	"color_scheme": "Mariana.sublime-color-scheme",
+	"dark_color_scheme": "Celeste.sublime-color-scheme",
+	"light_color_scheme": "Celeste.sublime-color-scheme",
+
+	// The number of spaces a tab is considered equal to
+	"tab_size": 2,
+
+	// remember_workspace makes Sublime Text remember what workspace each window
+	// was in last. When set to false the OS left to determine which workspace
+	// a window is opened in. This doesn't work with Wayland.
+	//
+	// By default, this setting is true. I'm setting it to false because I don't 
+	// want to be taken to a different virtual desktop when I open a file.
+	// [2022 09 11]
+	"remember_workspace": false,
+
+  // When files are opened from a file explorer or from the command line, this
+	// controls whether a new window is created or not.
+	// - "never": Never open a new window unless no window is open.
+	// - "always": Always open files in a new window.
+	// - "finder_only": (macOS only) Only open files in a new window when
+	//                  opening them from finder or dragging onto the dock icon.
+	//
+	// On Mac, this value is overridden in the platform specific settings.
+	//
+	// See also https://superuser.com/q/1058785/113083 on a related registry setting.
+	"open_files_in_new_window": "always",
+
+}
