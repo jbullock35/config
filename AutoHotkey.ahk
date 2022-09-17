@@ -41,6 +41,8 @@ GroupAdd, Eclipse, eclipse-workspace
 GroupAdd, Eclipse, StatET
 
 GroupAdd, Gmail,  Gmail
+GroupAdd, GoogleDocs, Google Docs
+GroupAdd, GoogleSlides, - Google Slides - 
 
 GroupAdd, LaTeX, Overleaf
 GroupAdd, LaTeX, WinEdt
@@ -50,11 +52,14 @@ GroupAdd, R, eclipse-workspace
 GroupAdd, R, StatET
 
 GroupAdd, RStudio, ahk_exe rstudio.exe
+GroupAdd, RStudio, RStudio ; for RStudio in the browser
 GroupAdd, Slack,  Slack
+GroupAdd, SQL,    John Bullock's ad hoc workspace - Google Chrome
 GroupAdd, Stata,  Do-file Editor - 
 GroupAdd, Thunderbird, Write:
 GroupAdd, WinEdt, WinEdt
 GroupAdd, Word,   ahk_exe WINWORD.exe
+GroupAdd, WorkplaceChat, ahk_exe Workplace Chat.exe
 
 
 
@@ -62,16 +67,28 @@ GroupAdd, Word,   ahk_exe WINWORD.exe
 ; OUTLOOK SHORTCUTS
 ; #####################################################################
 
+
+; Make Outlook open the previously displayed calendars on startup. 
+; By default, it doesn't do this. See https://superuser.com/questions/1164248/
+; for details.
+Loop {
+  WinWaitActive, johnbullock@fb.com - Outlook
+  ; Sleep 100
+  Send ^2
+WinWaitNotActive
+}
+
+
 ; When revising a calendar invite, change default option to 
 ; "Save changes but don't send." This chnage makes it a little 
 ; easier to save private notes. For details on the implementation,
 ; see https://www.autohotkey.com/boards/viewtopic.php?f=76&t=107579.
-; [2022 08 23]
+; [2022Â 08Â 23]
 ;
 ; Unlike hotkey and hotstring definitions, this code block won't be 
 ; executed unless it is in the "auto-execute" section at the start
 ; of the script. See the URL above and the "auto-execute" entry in 
-; the AutoHotkey help file for more details.  [2022 08 25]
+; the AutoHotkey help file for more details.  [2022Â 08Â 25]
 OutlookDialogBoxTitle = Microsoft Outlook
 Loop {
  WinWaitActive, %OutlookDialogBoxTitle%, Save changes &but don't send
@@ -90,7 +107,7 @@ Loop {
 ; See https://www.autohotkey.com/boards/viewtopic.php?f=76&t=107579 and 
 ; the "auto-execute" entry in the AutoHotkey help file for more details.
 ; In short, it's probably best if everything after this point is either 
-; a hotkey or a hotstring.  [2022 08 25]
+; a hotkey or a hotstring.  [2022Â 08Â 25]
 return
 
 
@@ -222,7 +239,7 @@ SetScrollLockState, AlwaysOff
 
 
 ; Insert on the numeric keypad will still work when NumLock is off
-; I haven't managed to set NumLock to an always-on state.  [2021 04 14]
+; I haven't managed to set NumLock to an always-on state.  [2021Â 04Â 14]
 ;
 ; SetNumLockState, AlwaysOn
 ; $NumLock::Return
@@ -295,7 +312,7 @@ clean_path_in_clipboard() {
 ;
 ; doesn't work. It also disables pasting in all applications and 
 ; leads to rapid repetition of hotkeys, which in turn generates a
-; warning.  [2021Â 07Â 09]
+; warning.  [2021Ã‚Â 07Ã‚Â 09]
 #IfWinActive, ahk_group R
   ^v::
   if (DllCall("IsClipboardFormatAvailable", "Uint", 1) OR DllCall("IsClipboardFormatAvailable", "Uint", 13)) ; if text was copied
@@ -320,7 +337,7 @@ clean_path_in_clipboard() {
 ; Unfortunately, this doesn't work when pasting into 
 ; Word comment notes. [2021 04 24]
 #IfWinActive
-^+v::                            ; Text–only paste from ClipBoard
+^+v::                            ; Textâ€“only paste from ClipBoard
    Clip0 = %ClipBoardAll%
    ClipBoard = %ClipBoard%       ; Convert to text
    Send ^v                       ; For best compatibility: SendPlay
@@ -347,7 +364,8 @@ Return
 ;
 #IfWinActive
   ::a la::{U+00E0} la
-  ::Aaroe::Aar{U+00F8}e
+  :c:Aaroe::Aar{U+00F8}e
+  :c:Anais::Ana{U+00EF}s
   ::brulee::br{U+00FB}l{U+00E9}e
   ::cafe::caf{U+00E9}
   :c:Castaneda::Casta{U+00F1}eda
@@ -433,13 +451,13 @@ NumpadSub::
 ; All of these shortcuts work the same way. In Eclipse, highlight the 
 ; name of an object, and then use the shortcut -- for example, 
 ; CTRL-SHIFT-C. The shortcut will then operate on the object that has 
-; the highlighted name.  [2020 03 08]
+; the highlighted name.  [2020Â 03Â 08]
 
 
 
 ; CTRL-ENTER SENDS THE CURRENT LINE
 ; I do this for compatibility with RStudio, which is a pain to configure
-; on the ICPSR VDE.  [2020 12 08]
+; on the ICPSR VDE.  [2020Â 12Â 08]
 #IfWinActive, ahk_group Eclipse
   ^Enter::
   SendInput {Control down}{r}{Control up}
@@ -577,6 +595,44 @@ NumpadSub::
 
 
 
+; #####################################################################
+; GOOGLE DOCS SHORTCUTS / VIRTUAL DESKTOP SHORTCUTS
+; #####################################################################
+; I used Peach's Ctrl-Alt-1, Ctrl-Alt-2, etc. to move across virtual 
+; desktops. But Google Docs pre-empts those shortcuts and instead uses
+; them to apply heading styles. As a result, when I am editing a 
+; Google Doc and then try to switch desktops, I end up just changing 
+; the formatting of my document. Even worse, when I switch to a desktop
+; in which a Google Doc is active, the formatting is automatically 
+; applied.
+;   This shortcut simply turns off Ctrl-Alt-1, Ctrl-Alt-2, etc. when I 
+; am using Google Docs. An alternative would be to remap these 
+; combinations to Ctrl-Alt-F1, Ctrl-Alt-F2, etc. Peach supports these 
+; F-key combinations as well. But if I did this remapping, I wouldn't 
+; be able to use the shortcuts for heading styles that Google Docs has.
+; [2022Â 09Â 09]
+#IfWinActive, ahk_group GoogleDocs
+  ^!1::Return
+  ^!2::Return
+  ^!3::Return
+  ^!4::Return
+  ^!5::Return
+  ^!6::Return
+#IfWinActive
+
+
+
+; [2022â€‘09â€‘09: not yet implemented. I will try to train myself to use 
+;  the function keys (Ctrl-Alt-F1, etc.) instead of the numbers
+;  (Ctrl-Alt-F1). Failing that, implement the function described--but 
+;  also check AutoHotkey to see whether I can simply get Google to stop 
+;  listening to Ctrl-Alt-1, etc., when I switch desktops.]
+
+
+
+
+
+
 ; **************************************************************************
 ; HTML SHORTCUTS ####
 ; **************************************************************************
@@ -676,7 +732,7 @@ return
   ; for more on the problem and this solution.
   ;
   ; IfWinNotActive ahk_exe WindowsTerminal.exe
-  #If !WinActive("ahk_exe WindowsTerminal.exe") && !WinActive("ahk_group Eclipse") && !WinActive("ahk_group LaTeX") && !WinActive("ahk_group RStudio") &&!WinActive("ahk_exe WinEdt.exe")
+  #If !WinActive("ahk_exe WindowsTerminal.exe") && !WinActive("ahk_group Eclipse") && !WinActive("ahk_group LaTeX") && !WinActive("ahk_group RStudio") && !WinActive("ahk_group SQL") && !WinActive("ahk_exe WinEdt.exe") && !WinActive("ahk_group WorkplaceChat")
     #InstallKeybdHook                          ; permit AutoHotKey to look back at previous key presses
     :?*X:--::Send, {ASC 0150}                  ; send en dash
     #IF A_PriorHotKey A_PriorKey = ":?*X:---"
@@ -712,7 +768,7 @@ return
 ; #####################################################################
 ; See https://superuser.com/questions/1738995/ for a bit more on this 
 ; issue. I use the solution that another commenter offered, except that
-; I'm not linking to specific paragraphs.  [2022 09 09]
+; I'm not linking to specific paragraphs.  [2022Â 09Â 09]
 
 ; Launch "Assign" scratchpad.
 ^!+a::
@@ -720,7 +776,7 @@ return
   return
 
 
-; Launch daily log.  [2022 08 30]
+; Launch daily log.  [2022Â 08Â 30]
 ^!+w::
   Run "C:\Users\johnbullock\Documents\config\What I did.url"
   return
