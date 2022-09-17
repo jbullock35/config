@@ -185,7 +185,26 @@ return
 
 
 ; SEND UTC DATE WITH NON-BREAKING HYPHENS (CTRL-ALT-D)
-^!d::Send %A_YYYY%{U+2011}%A_MM%{U+2011}%A_DD%
+; Hyphens are breaking ("soft") in assign.docx because it's set in Arial,
+; which doesn't have non-breaking hyphens. If I try to use them, Word 
+; changes to Cambria Math.  [2022 09 17]
+#IfWinActive assign.docx
+  ^!d::
+    Send %A_YYYY%
+    Send {U+00AD}
+    Send %A_MM%
+    Send {U+00AD}
+    Send %A_DD%
+    return
+#IfWinActive
+  ^!d::
+    Send %A_YYYY%
+    Send {U+2011}
+    Send %A_MM%
+    Send {U+2011}
+    Send %A_DD%
+    return
+
 
 
 ; SEND DATE IN BRACKETS (CTRL-ALT-SHIFT-D)
