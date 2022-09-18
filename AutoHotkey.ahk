@@ -36,6 +36,10 @@ GroupAdd, ASCII,  WinEdt
 
 GroupAdd, Acrobat, Adobe Acrobat Pro DC
 
+GroupAdd, Chat, Slack
+GroupAdd, Chat, Chat | Workplace
+GroupAdd, Chat, Workplace Chat
+
 GroupAdd, Eclipse, Eclipse Platform
 GroupAdd, Eclipse, eclipse-workspace
 GroupAdd, Eclipse, StatET
@@ -53,7 +57,6 @@ GroupAdd, R, StatET
 
 GroupAdd, RStudio, ahk_exe rstudio.exe
 GroupAdd, RStudio, RStudio ; for RStudio in the browser
-GroupAdd, Slack,  Slack
 GroupAdd, SQL,    John Bullock's ad hoc workspace - Google Chrome
 GroupAdd, Stata,  Do-file Editor - 
 GroupAdd, Thunderbird, Write:
@@ -464,6 +467,24 @@ NumpadSub::
 
 
 
+; ##################################################################
+; CHAT SHORTCUTS
+; ##################################################################
+; Replace Enter with Alt-Enter so that Enter creates a new line 
+; rather than submitting a message.
+#IfWinActive, ahk_group Chat
+  Enter::
+  Send !{Enter}
+  return
+
+  ^Enter::
+  Send {Enter}
+  return
+#IfWinActive
+
+
+
+
 ; #####################################################################
 ; ECLIPSE SHORTCUTS
 ; #####################################################################
@@ -852,19 +873,6 @@ return
   Sleep 300
   Send ^3
   return
-
-
-
-; #####################################################################
-; SLACK SHORTCUTS
-; #####################################################################
-; Replace Enter with Alt-Enter so that Enter creates a new line rather
-; than submitting a message.
-#IfWinActive, ahk_group Slack
-  Enter::
-  Send !{Enter}
-  return
-
 
 
 
