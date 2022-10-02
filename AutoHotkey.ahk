@@ -62,6 +62,7 @@ GroupAdd, Stata,  Do-file Editor -
 GroupAdd, Thunderbird, Write:
 GroupAdd, WinEdt, WinEdt
 GroupAdd, Word,   ahk_exe WINWORD.exe
+GroupAdd, Workplace, Workplace - 
 GroupAdd, WorkplaceChat, ahk_exe Workplace Chat.exe
 
 
@@ -69,18 +70,6 @@ GroupAdd, WorkplaceChat, ahk_exe Workplace Chat.exe
 ; #####################################################################
 ; OUTLOOK SHORTCUTS
 ; #####################################################################
-
-
-; Make Outlook open the previously displayed calendars on startup. 
-; By default, it doesn't do this. See https://superuser.com/questions/1164248/
-; for details.
-Loop {
-  WinWaitActive, johnbullock@fb.com - Outlook
-  ; Sleep 100
-  Send ^2
-WinWaitNotActive
-}
-
 
 ; When revising a calendar invite, change default option to 
 ; "Save changes but don't send." This chnage makes it a little 
@@ -92,6 +81,13 @@ WinWaitNotActive
 ; executed unless it is in the "auto-execute" section at the start
 ; of the script. See the URL above and the "auto-execute" entry in 
 ; the AutoHotkey help file for more details.  [2022 08 25]
+;
+; PROBLEM: these two loops interfere with each other. Only the first
+; one works. Why is that? I can't even get around the problem by 
+; embedding one loop in the other.  [2022 09 18]
+; --Does the problem have to do with the use of WinWaitNotActive?
+;   Should I instead use something like "break"?
+
 OutlookDialogBoxTitle = Microsoft Outlook
 Loop {
  WinWaitActive, %OutlookDialogBoxTitle%, Save changes &but don't send
@@ -101,6 +97,18 @@ Loop {
  WinWaitNotActive
  ; SoundBeep, 1000
 }
+
+
+; Make Outlook open the previously displayed calendars on startup. 
+; By default, it doesn't do this. See https://superuser.com/questions/1164248/
+; for details.
+Loop {
+  WinWaitActive, johnbullock@fb.com - Outlook
+  ; Sleep 100
+  Send ^2
+  WinWaitNotActive
+}
+
 
 
 
@@ -187,26 +195,36 @@ return
 ^!+=::Suspend
 
 
-; SEND UTC DATE WITH NON-BREAKING HYPHENS (CTRL-ALT-D)
-; Hyphens are breaking ("soft") in assign.docx because it's set in Arial,
-; which doesn't have non-breaking hyphens. If I try to use them, Word 
-; changes to Cambria Math.  [2022 09 17]
-#IfWinActive assign.docx
+; SEND UTC DATE (CTRL-ALT-D)
+; Except for the log in OneNote, we use ordinary hyphens rather than
+; non-breaking hyphens. It is awkward to break a string like 
+; "2022‑09‑24" across lines, but we need to use the soft hyphens 
+; because the date string will sometimes be used in filenames, and 
+; non-breaking hyphens cause problems in filenames.  [2022 09 24]
+#IfWinActive Daily log - OneNote
   ^!d::
+    ; Send %A_DDDD%{Space}  ; for example, "Sunday". But how to capitalize it?
     Send %A_YYYY%
-    Send {U+00AD}
+    Sleep 35
+    Send {U+2011}
+    Sleep 25
     Send %A_MM%
-    Send {U+00AD}
+    Sleep 25
+    Send {U+2011}
+    Sleep 25
     Send %A_DD%
     return
 #IfWinActive
   ^!d::
     Send %A_YYYY%
-    Send {U+2011}
+    Sleep 25
+    Send -
     Send %A_MM%
-    Send {U+2011}
+    Sleep 25
+    Send -
     Send %A_DD%
     return
+
 
 
 
@@ -472,7 +490,7 @@ NumpadSub::
 ; ##################################################################
 ; Replace Enter with Alt-Enter so that Enter creates a new line 
 ; rather than submitting a message.
-#IfWinActive, ahk_group Chat
+#IfWinActive ahk_group Chat || #IfWinActive ahk_group Workplace
   Enter::
   Send !{Enter}
   return
