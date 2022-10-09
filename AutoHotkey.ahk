@@ -51,6 +51,9 @@ GroupAdd, GoogleSlides, - Google Slides -
 GroupAdd, LaTeX, Overleaf
 GroupAdd, LaTeX, WinEdt
 
+GroupAdd, Outlook, Tasks - johnbullock@meta.com - Outlook                   
+GroupAdd, Outlook, Microsoft Outlook
+
 GroupAdd, R, Eclipse Platform
 GroupAdd, R, eclipse-workspace
 GroupAdd, R, StatET
@@ -71,43 +74,63 @@ GroupAdd, WorkplaceChat, ahk_exe Workplace Chat.exe
 ; OUTLOOK SHORTCUTS
 ; #####################################################################
 
-; When revising a calendar invite, change default option to 
-; "Save changes but don't send." This chnage makes it a little 
-; easier to save private notes. For details on the implementation,
-; see https://www.autohotkey.com/boards/viewtopic.php?f=76&t=107579.
-; [2022 08 23]
-;
-; Unlike hotkey and hotstring definitions, this code block won't be 
-; executed unless it is in the "auto-execute" section at the start
-; of the script. See the URL above and the "auto-execute" entry in 
-; the AutoHotkey help file for more details.  [2022 08 25]
-;
-; PROBLEM: these two loops interfere with each other. Only the first
-; one works. Why is that? I can't even get around the problem by 
-; embedding one loop in the other.  [2022 09 18]
-; --Does the problem have to do with the use of WinWaitNotActive?
-;   Should I instead use something like "break"?
+/* 
+This code block does two things. First, when Outlook starts in 
+Tasks view, it switches to Calendar view. This is a workaround for a
+bug in Outlook whereby multiple calendars won't be shown if one 
+starts directly in Calendar view.
+  Second, when revising a calendar invite, this code block changes
+the default option to "Save changes but don't send." This change 
+makes it  easier to save private notes. For details on the 
+implementation of this particular feature, see 
+https://www.autohotkey.com/boards/viewtopic.php?f=76&t=107579.
 
-OutlookDialogBoxTitle = Microsoft Outlook
+For details about the looping, see https://www.autohotkey.com/boards/viewtopic.php?f=76&t=109255.
+In particular, note: 
+  * A challenge is to run the loop while making it recognize that 
+    commands shouldn't be run twice on the same Outlook instance.
+    I've accomplished this by tracking the unique IDs for each 
+    windows.
+  * To compare variables, use "if(var1 = var2)", not "if(%var1%=%var2%)".
+
+
+Unlike hotkey and hotstring definitions, this code block won't be 
+executed unless it is in the "auto-execute" section at the start of
+the script. See the URL above and the "auto-execute" entry in the
+the AutoHotkey help file for more details.  [2022 08 25]
+*/
+
+UniqueID_Outlook_prev := ""
+UniqueID_OutlookDialog_prev := ""
 Loop {
- WinWaitActive, %OutlookDialogBoxTitle%, Save changes &but don't send
- ; Send !b
- Control, Check,, Button2
- ; SoundBeep, 1500
- WinWaitNotActive
- ; SoundBeep, 1000
+  if WinActive("ahk_group Outlook") {
+
+    if WinActive("Tasks - johnbullock@meta.com - Outlook") {
+      UniqueID_Outlook := WinExist("A")  ; get unique window ID
+      if (UniqueID_Outlook != UniqueID_Outlook_prev) {
+        Send ^2
+        UniqueID_Outlook_prev := UniqueID_Outlook
+        Sleep, 500
+      }
+    }
+
+    if WinActive("Microsoft Outlook", "Save changes &but don't send") {
+      UniqueID_OutlookDialog := WinExist("A") ; get unique window ID
+      if (UniqueID_OutlookDialog != UniqueID_OutlookDialog_prev) {
+        Control, Check,, Button2
+        UniqueID_OutlookDialog_prev := UniqueID_OutlookDialog
+        Sleep, 500
+      }
+    }
+    
+  } 
 }
+      
 
 
-; Make Outlook open the previously displayed calendars on startup. 
-; By default, it doesn't do this. See https://superuser.com/questions/1164248/
-; for details.
-Loop {
-  WinWaitActive, johnbullock@fb.com - Outlook
-  ; Sleep 100
-  Send ^2
-  WinWaitNotActive
-}
+
+
+
 
 
 
