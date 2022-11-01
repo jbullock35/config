@@ -38,6 +38,7 @@ GroupAdd, Acrobat, Adobe Acrobat Pro DC
 
 GroupAdd, Chat, Slack
 GroupAdd, Chat, Chat | Workplace
+GroupAdd, Chat, Workplace
 GroupAdd, Chat, Workplace Chat
 
 GroupAdd, Eclipse, Eclipse Platform
@@ -51,7 +52,7 @@ GroupAdd, GoogleSlides, - Google Slides -
 GroupAdd, LaTeX, Overleaf
 GroupAdd, LaTeX, WinEdt
 
-GroupAdd, Outlook, Tasks - johnbullock@meta.com - Outlook                   
+GroupAdd, Outlook, johnbullock@meta.com - Outlook                   
 GroupAdd, Outlook, Microsoft Outlook
 
 GroupAdd, R, Eclipse Platform
@@ -100,30 +101,20 @@ the script. See the URL above and the "auto-execute" entry in the
 the AutoHotkey help file for more details.  [2022 08 25]
 */
 
-UniqueID_Outlook_prev := ""
-UniqueID_OutlookDialog_prev := ""
 Loop {
-  if WinActive("ahk_group Outlook") {
+  WinWaitActive, ahk_group Outlook
+  Sleep, 350   ; 250 is a bit too short
 
-    if WinActive("Tasks - johnbullock@meta.com - Outlook") {
-      UniqueID_Outlook := WinExist("A")  ; get unique window ID
-      if (UniqueID_Outlook != UniqueID_Outlook_prev) {
-        Send ^2
-        UniqueID_Outlook_prev := UniqueID_Outlook
-        Sleep, 500
-      }
-    }
+  if WinActive("Tasks - johnbullock@meta.com - Outlook") {
+    Send ^2
+  }
 
-    if WinActive("Microsoft Outlook", "Save changes &but don't send") {
-      UniqueID_OutlookDialog := WinExist("A") ; get unique window ID
-      if (UniqueID_OutlookDialog != UniqueID_OutlookDialog_prev) {
-        Control, Check,, Button2
-        UniqueID_OutlookDialog_prev := UniqueID_OutlookDialog
-        Sleep, 500
-      }
-    }
-    
-  } 
+  if WinActive("Microsoft Outlook", "Save changes &but don't send") {
+    Control, Check,, Button2
+  }
+
+  WinWaitNotActive
+      
 }
       
 
@@ -237,13 +228,23 @@ return
     Sleep 25
     Send %A_DD%
     return
+#IfWinActive ahk_exe chrome.exe
+  ^!d::
+    Send %A_YYYY%
+    Sleep 150  ; 75 seems to cause problems for Google Docs
+    Send -
+    Send %A_MM%
+    Sleep 150
+    Send -
+    Send %A_DD%
+    return
 #IfWinActive
   ^!d::
     Send %A_YYYY%
-    Sleep 25
+    Sleep 50
     Send -
     Send %A_MM%
-    Sleep 25
+    Sleep 50
     Send -
     Send %A_DD%
     return
@@ -446,6 +447,7 @@ Return
   ::gruyere::gruy{U+00E8}re
   :c:Haagen-Dasz::H{U+00E4}agen-Dasz
   :c:Jorg::J{U+00F6}rg
+  ::Jose::Jos{U+00E9}
   :*:naivete::naivet{U+00E9}
   :c:nee::n{U+00E9}e
   ::pinon::pi{U+00F1}on
