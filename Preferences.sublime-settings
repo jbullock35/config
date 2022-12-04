@@ -49,4 +49,10 @@
 	// See also https://superuser.com/q/1058785/113083 on a related registry setting.
 	"open_files_in_new_window": "always",
 
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+	"theme": "auto",
+	"update_check": false,
 }

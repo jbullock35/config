@@ -40,6 +40,7 @@ GroupAdd, Chat, Slack
 GroupAdd, Chat, Chat | Workplace
 GroupAdd, Chat, Workplace
 GroupAdd, Chat, Workplace Chat
+GroupAdd, Chat, ahk_pid 24980  ; dedicated non-web Chat app
 
 GroupAdd, Eclipse, Eclipse Platform
 GroupAdd, Eclipse, eclipse-workspace
@@ -103,7 +104,7 @@ the AutoHotkey help file for more details.  [2022 08 25]
 
 Loop {
   WinWaitActive, ahk_group Outlook
-  Sleep, 350   ; 250 is a bit too short
+  Sleep, 450   ; 400 is a bit too short  [2022 11 25]
 
   if WinActive("Tasks - johnbullock@meta.com - Outlook") {
     Send ^2
@@ -117,12 +118,6 @@ Loop {
       
 }
       
-
-
-
-
-
-
 
 
 
@@ -430,13 +425,17 @@ Return
   ::a la::{U+00E0} la
   :c:Aaroe::Aar{U+00F8}e
   :c:Anais::Ana{U+00EF}s
+  :c:Apres::Apr{U+00E8}s
+  :c:apres::apr{U+00E8}s
   ::brulee::br{U+00FB}l{U+00E9}e
   ::cafe::caf{U+00E9}
+  ::cafes::caf{U+00E9}s
   :c:Castaneda::Casta{U+00F1}eda
   :c:Chimayo::Chimay{U+00F3}
   :*:cliche::clich{U+00E9}
   :c:Comte::Comt{U+00E9}
   :*:consomme::consomm{U+00E9}
+  ::Cortazar::Cort{U+00E1}zar
   :*:crepe::cr{U+00E9}pe
   :*:divorcee::divorc{U+00E9}e
   :c:Espanol::Espa{U+00F1}ol
@@ -515,7 +514,7 @@ NumpadSub::
 ; ##################################################################
 ; Replace Enter with Alt-Enter so that Enter creates a new line 
 ; rather than submitting a message.
-#IfWinActive ahk_group Chat || #IfWinActive ahk_group Workplace
+#IfWinActive ahk_group Chat
   Enter::
   Send !{Enter}
   return
@@ -863,6 +862,15 @@ return
 ^!+w::
   Run "C:\Users\johnbullock\Documents\config\What I did.url"
   return
+
+
+
+; **************************************************************************
+; PEACH SHORTCUTS (VIRTUAL DESKTOPS)
+; **************************************************************************
+; For whatever reason, Ctrl-Shift-F8 doesn't work. This hotkey fixes
+; the problem.  [2022 11 24]
+^!F8::^!8
 
 
 
