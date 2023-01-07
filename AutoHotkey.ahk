@@ -133,6 +133,7 @@ return
 
 
 
+
 ; #####################################################################
 ; NOTES THAT CAME WITH AUTOHOTKEY
 ; #####################################################################
@@ -236,10 +237,10 @@ return
 #IfWinActive
   ^!d::
     Send %A_YYYY%
-    Sleep 50
+    Sleep 75
     Send -
     Send %A_MM%
-    Sleep 50
+    Sleep 75
     Send -
     Send %A_DD%
     return
@@ -409,6 +410,12 @@ Return
 
 ; INSERT TYPOGRAPHIC RIGHT SINGLE QUOTE
 :c?*:\rsquo::{U+2019}
+
+
+; ABBREVIATIONS
+::pz::personalization 
+:c:statSig::statistically significant
+
 
 
 
@@ -952,6 +959,17 @@ return
 
 
 
+; #####################################################################
+; SPECIFIC DOCUMENTS
+; #####################################################################
 
+; Shortcut to go to start of "meetings" section.
 
----
+#IfWinActive CSN5_personalizationAndPrivacy.docx
+  ^!+m::
+    Send ^+{F5}
+    Sleep 300
+    Send !g
+    SendInput {Enter}
+    return
+#IfWinActive
