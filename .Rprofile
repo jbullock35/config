@@ -135,5 +135,10 @@ options(todor_patterns = "TO DO")  # For the todor package / RStudio add-in
 
 # ADD CHECKING FOR PARALLEL CORES
 # Recommended in a message that I get when I load rstan. rstan is slow
-# by default; perhaps this will help.  [2020Â 08Â 17]
+# by default; perhaps this will help.  [2020 08 17]
 options(mc.cores = parallel::detectCores())
+
+
+# STOP PROMPTING TO SAVE ON EXIT
+formals(quit)$save <- formals(q)$save <- "no"
+
