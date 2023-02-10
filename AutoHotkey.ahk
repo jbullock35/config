@@ -62,6 +62,7 @@ GroupAdd, R, StatET
 
 GroupAdd, RStudio, ahk_exe rstudio.exe
 GroupAdd, RStudio, RStudio ; for RStudio in the browser
+GroupAdd, RStudio, Sunday alerts ; for RStudio in the browser
 GroupAdd, SQL,    John Bullock's ad hoc workspace - Google Chrome
 GroupAdd, Stata,  Do-file Editor - 
 GroupAdd, Thunderbird, Write:
@@ -451,7 +452,8 @@ Return
   ::Fjallraven::Fj{U+00E4}llr{U+00E4}ven
   ::Guantanamo::Guant{U+00E1}namo
   ::gruyere::gruy{U+00E8}re
-  :c:Haagen-Dasz::H{U+00E4}agen-Dasz
+  :c:Haagen-Dasz::H{U+00E4}agen-Dasz 
+  :c:Hrbkova::Hrbkov{U+00E1} 
   :c:Jorg::J{U+00F6}rg
   ::Jose::Jos{U+00E9}
   :*:naivete::naivet{U+00E9}
@@ -879,12 +881,19 @@ return
 ; the problem.  [2022 11 24]
 ^!F8::^!8
 
+; Ctrl-Alt-F10 has never worked with Peach. This is a hacky 
+; workaround
+^!F10::
+  SendInput ^!{F9}
+  SendInput ^!{Right}  
+  return
+  
 
 
 ; #####################################################################
 ; RSTUDIO SHORTCUTS
 ; #####################################################################
-; Redo commands to RStudio so I can use my Eclipse/StatET shortcuts
+; Redo commands to RStudio so I can use my Eclipse/StatET9 shortcuts
 
 
 ; CTRL-0 TOGGLES BETWEEN SOURCE AND CONSOLE
@@ -963,12 +972,19 @@ return
 ; SPECIFIC DOCUMENTS
 ; #####################################################################
 
-; Shortcut to go to start of "meetings" section.
-
 #IfWinActive CSN5_personalizationAndPrivacy.docx
-  ^!+m::
+  ^!+m::           ; Shortcut to go to start of "meetings" section.
     Send ^+{F5}
     Sleep 300
+    Send {Up}{Up}  ; select top option in the list
+    Send !g
+    SendInput {Enter}
+    return
+  ^!+s::           ; Shortcut to go to start of "studies" section.
+    Send ^+{F5}
+    Sleep 300
+    Send {Up}{Up}  ; select top option in the list
+    Send {Down}    ; select next option in the list
     Send !g
     SendInput {Enter}
     return
