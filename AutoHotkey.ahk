@@ -414,6 +414,8 @@ Return
 
 
 ; ABBREVIATIONS
+::opz::operationalization
+::opzs::operationalizations
 ::pz::personalization 
 :c:statSig::statistically significant
 
@@ -867,10 +869,15 @@ return
   return
 
 
-; Launch daily log.  [2022 08 30]
+; Launch daily log ("What I Did").  [2022 08 30]
+^!+l::
+  Run "C:\Users\johnbullock\Documents\config\What I did.url"
+  return
+
 ^!+w::
   Run "C:\Users\johnbullock\Documents\config\What I did.url"
   return
+  
 
 
 
@@ -885,6 +892,7 @@ return
 ; workaround
 ^!F10::
   SendInput ^!{F9}
+  Sleep 200
   SendInput ^!{Right}  
   return
   
