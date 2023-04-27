@@ -238,7 +238,7 @@ return
 #IfWinActive
   ^!d::
     Send %A_YYYY%
-    Sleep 75
+    Sleep 100  ; 75 may be too little in Word
     Send -
     Send %A_MM%
     Sleep 75
@@ -415,6 +415,9 @@ Return
 
 ; ABBREVIATIONS
 ::opz::operationalization
+::opzd::operationalized
+::opze::operationalize
+::opzing::operationalizing
 ::opzs::operationalizations
 ::pz::personalization 
 :c:statSig::statistically significant
@@ -460,6 +463,7 @@ Return
   ::Jose::Jos{U+00E9}
   :*:naivete::naivet{U+00E9}
   :c:nee::n{U+00E9}e
+  :c:Oe::{U+00D6}e  ; Kenzaburo Öe
   ::pinon::pi{U+00F1}on
   ::puree::pur{U+00E9}e
   ::revee::r{U+00EA}v{U+00E9}e
@@ -973,6 +977,21 @@ return
 ;
 ; #IfWinActive, ahk_group WinEdt
 ;   ^+k:: Return
+
+
+
+; #####################################################################
+; WORD SHORTCUTS
+; #####################################################################
+;
+  ^!+s::                ; shortcut for strikethrough of highlighted text. But it doesn't work. LOOK INTO WHY. The group is fine—it seems that shortcuts just don't work in Word.  [2023 04 06]
+    Send +{F10}
+    Sleep 150
+    Send f
+    Sleep 350
+    Send !k
+    SendInput {Enter}
+    return
 
 
 
