@@ -228,7 +228,7 @@ return
 #IfWinActive ahk_exe chrome.exe
   ^!d::
     Send %A_YYYY%
-    Sleep 150  ; 75 seems to cause problems for Google Docs
+    Sleep 150   ; 75 seems to cause problems for Google Docs
     Send -
     Send %A_MM%
     Sleep 150
@@ -414,12 +414,12 @@ Return
 
 
 ; ABBREVIATIONS
-::opz::operationalization
 ::opzd::operationalized
 ::opze::operationalize
 ::opzing::operationalizing
 ::opzs::operationalizations
-::pz::personalization 
+::opzn::operationalization
+::pzn::personalization 
 :c:statSig::statistically significant
 
 
@@ -459,7 +459,7 @@ Return
   ::gruyere::gruy{U+00E8}re
   :c:Haagen-Dasz::H{U+00E4}agen-Dasz 
   :c:Hrbkova::Hrbkov{U+00E1} 
-  :c:Jorg::J{U+00F6}rg
+  :c:Jorg::J{U+00F6}rg 
   ::Jose::Jos{U+00E9}
   :*:naivete::naivet{U+00E9}
   :c:nee::n{U+00E9}e
@@ -472,6 +472,19 @@ Return
   ::sauteed::saut{U+00E9}ed
   ::sauteing::saut{U+00E9}ing
   ::soiree::soir{U+00E9}e
+
+
+
+; #####################################################################
+; DUAL MONITORS
+; #####################################################################
+; I want to use ShowDesktopOneMonitor to change the behavior of 
+; Win+D so that it minimizes windows on only the main monitor.
+;
+; In the future, I may need to modify this shortcut so that it works
+; only when ShowDesktopOneMonitor is running.  [2023 05 26]
+;
+#d::#+d
 
 
 
@@ -716,6 +729,27 @@ NumpadSub::
   ^!5::Return
   ^!6::Return
 #IfWinActive
+
+
+; Set up shortcut for adding 3 pts. space above each highlighted 
+; paragraph
+;
+; TODO: Find a way to make this shortcut active only if a Google 
+; Doc is loaded. Checking the window name isn't good enough, as I 
+; change window names sometimes.  [2023 05 09]
+#IfWinActive
+^!+3::
+  Send !/
+  Sleep 75
+  Send Custom
+  Sleep 75
+  Send {Enter}
+  Sleep 75
+  Send {Tab}{Tab}{Tab}
+  Sleep 75
+  Send 3
+  Send {Enter}
+  return
 
 
 
