@@ -122,6 +122,7 @@ Loop {
 
 
 
+
 ; **************************************************************************
 ; END THE AUTO-EXECUTE SECTION ####
 ; **************************************************************************
@@ -206,7 +207,16 @@ return
 ^!+=::Suspend
 
 
-; SEND UTC DATE (CTRL-ALT-D)
+; CHECK WHETHER PROCESS EXISTS
+; https://www.autohotkey.com/board/topic/146913-run-command-only-if-specific-program-is-running/
+ProcessExist(i) {
+  Process, Exist, % i
+  return ErrorLevel
+}
+
+
+
+; SEND DATE IN FORM YYYY-MM-DD (CTRL-ALT-D)
 ; Except for the log in OneNote, we use ordinary hyphens rather than
 ; non-breaking hyphens. It is awkward to break a string like 
 ; "2022‑09‑24" across lines, but we need to use the soft hyphens 
@@ -484,7 +494,8 @@ Return
 ; In the future, I may need to modify this shortcut so that it works
 ; only when ShowDesktopOneMonitor is running.  [2023 05 26]
 ;
-#d::#+d
+#If ProcessExist("ShowDesktopOneMonitor.exe")
+  #d::#+d
 
 
 
@@ -511,7 +522,7 @@ Send {U+2011}
 return
 
 
-; NUMERIC KEYPAD SENDS MINUS SIGN
+; NUMERIC KEYPAD SENDS TYPOGRAPHIC MINUS SIGN
 NumpadSub::
   Send {U+02D7}
   return
