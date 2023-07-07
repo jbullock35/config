@@ -752,7 +752,7 @@ NumpadSub::
 ^!+3::
   Send !/
   Sleep 75
-  Send Custom
+  Send Custom line
   Sleep 75
   Send {Enter}
   Sleep 75
@@ -838,6 +838,7 @@ return
     :c*?:\mu::{U+03BC}
     :c*:\neq::{U+2260}
     ; ::\notin::{U+2209}
+    :c:\P::{U+00B6}  ; ¶, AKA "pilcrow" or "paragraph sign"
     :c*:\phi::{U+0278}
     :c*:\Phi::{U+03A6}
     :c*:\pi::{U+03C0}
@@ -1027,16 +1028,44 @@ return
 
 ; #####################################################################
 ; WORD SHORTCUTS
-; #####################################################################
-;
-  ^!+s::                ; shortcut for strikethrough of highlighted text. But it doesn't work. LOOK INTO WHY. The group is fine—it seems that shortcuts just don't work in Word.  [2023 04 06]
+; ##############################p#######################################
+#IfWinActive, ahk_group Word
+
+; For Word, the key seems to be to sleep a little as soon as the 
+; hotkey is pressed. Without doing that, the shortcuts won't work.
+; [2023 07 07]
+
+  ; Strikethrough of highlighted text. 
+  ^!+s::                    
+    Sleep 500
     Send +{F10}
-    Sleep 150
     Send f
-    Sleep 350
     Send !k
     SendInput {Enter}
     return
+
+  ; Extend margin to end of page
+  ^!+x::                
+    Sleep 500  
+    Send +{F10}
+    Send {Down}{Down}{Down}{Down}
+    Send {Enter}
+    Send !r
+    SendInput -1
+    SendInput {Enter}
+    return
+
+    D
+
+; #####################################################################
+; WORKPLACE CHAT SHORTCUTS
+; #####################################################################
+; 
+; For the non-web app.
+
+#IfWinActive, ahk_group WorkplaceChat
+  ^+a::Return  ; disable Ctrl-Shift-A (Archive Chat)
+
 
 
 
