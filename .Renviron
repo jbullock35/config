@@ -29,3 +29,8 @@ _R_CHECK_LENGTH_1_CONDITION_ = TRUE
 # take only the first value of the object that
 # they receive.  [2020 01 16]
 _R_CHECK_LENGTH_1_LOGIC2_ = TRUE
+
+
+# THROW ERRORS WHEN USING a:b AND a OR b IS LONGER THAN ONE
+# Supported only from R 4.3.0
+_R_CHECK_LENGTH_COLON_ = TRUE

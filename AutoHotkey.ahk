@@ -122,6 +122,7 @@ Loop {
 
 
 
+
 ; **************************************************************************
 ; END THE AUTO-EXECUTE SECTION ####
 ; **************************************************************************
@@ -206,7 +207,16 @@ return
 ^!+=::Suspend
 
 
-; SEND UTC DATE (CTRL-ALT-D)
+; CHECK WHETHER PROCESS EXISTS
+; https://www.autohotkey.com/board/topic/146913-run-command-only-if-specific-program-is-running/
+ProcessExist(i) {
+  Process, Exist, % i
+  return ErrorLevel
+}
+
+
+
+; SEND DATE IN FORM YYYY-MM-DD (CTRL-ALT-D)
 ; Except for the log in OneNote, we use ordinary hyphens rather than
 ; non-breaking hyphens. It is awkward to break a string like 
 ; "2022‑09‑24" across lines, but we need to use the soft hyphens 
@@ -228,7 +238,7 @@ return
 #IfWinActive ahk_exe chrome.exe
   ^!d::
     Send %A_YYYY%
-    Sleep 150  ; 75 seems to cause problems for Google Docs
+    Sleep 150   ; 75 seems to cause problems for Google Docs
     Send -
     Send %A_MM%
     Sleep 150
@@ -238,7 +248,7 @@ return
 #IfWinActive
   ^!d::
     Send %A_YYYY%
-    Sleep 75
+    Sleep 100  ; 75 may be too little in Word
     Send -
     Send %A_MM%
     Sleep 75
@@ -414,7 +424,12 @@ Return
 
 
 ; ABBREVIATIONS
-::pz::personalization 
+::opzd::operationalized
+::opze::operationalize
+::opzing::operationalizing
+::opzs::operationalizations
+::opzn::operationalization
+::pzn::personalization 
 :c:statSig::statistically significant
 
 
@@ -454,10 +469,11 @@ Return
   ::gruyere::gruy{U+00E8}re
   :c:Haagen-Dasz::H{U+00E4}agen-Dasz 
   :c:Hrbkova::Hrbkov{U+00E1} 
-  :c:Jorg::J{U+00F6}rg
+  :c:Jorg::J{U+00F6}rg 
   ::Jose::Jos{U+00E9}
   :*:naivete::naivet{U+00E9}
   :c:nee::n{U+00E9}e
+  :c:Oe::{U+00D6}e  ; Kenzaburo Öe
   ::pinon::pi{U+00F1}on
   ::puree::pur{U+00E9}e
   ::revee::r{U+00EA}v{U+00E9}e
@@ -466,6 +482,20 @@ Return
   ::sauteed::saut{U+00E9}ed
   ::sauteing::saut{U+00E9}ing
   ::soiree::soir{U+00E9}e
+
+
+
+; #####################################################################
+; DUAL MONITORS
+; #####################################################################
+; I want to use ShowDesktopOneMonitor to change the behavior of 
+; Win+D so that it minimizes windows on only the main monitor.
+;
+; In the future, I may need to modify this shortcut so that it works
+; only when ShowDesktopOneMonitor is running.  [2023 05 26]
+;
+#If ProcessExist("ShowDesktopOneMonitor.exe")
+  #d::#+d
 
 
 
@@ -492,7 +522,7 @@ Send {U+2011}
 return
 
 
-; NUMERIC KEYPAD SENDS MINUS SIGN
+; NUMERIC KEYPAD SENDS TYPOGRAPHIC MINUS SIGN
 NumpadSub::
   Send {U+02D7}
   return
@@ -712,6 +742,27 @@ NumpadSub::
 #IfWinActive
 
 
+; Set up shortcut for adding 3 pts. space above each highlighted 
+; paragraph
+;
+; TODO: Find a way to make this shortcut active only if a Google 
+; Doc is loaded. Checking the window name isn't good enough, as I 
+; change window names sometimes.  [2023 05 09]
+#IfWinActive
+^!+3::
+  Send !/
+  Sleep 75
+  Send Custom line
+  Sleep 75
+  Send {Enter}
+  Sleep 75
+  Send {Tab}{Tab}{Tab}
+  Sleep 75
+  Send 3
+  Send {Enter}
+  return
+
+
 
 ; [2022‑09‑09: not yet implemented. I will try to train myself to use 
 ;  the function keys (Ctrl-Alt-F1, etc.) instead of the numbers
@@ -787,6 +838,7 @@ return
     :c*?:\mu::{U+03BC}
     :c*:\neq::{U+2260}
     ; ::\notin::{U+2209}
+    :c:\P::{U+00B6}  ; ¶, AKA "pilcrow" or "paragraph sign"
     :c*:\phi::{U+0278}
     :c*:\Phi::{U+03A6}
     :c*:\pi::{U+03C0}
@@ -867,10 +919,15 @@ return
   return
 
 
-; Launch daily log.  [2022 08 30]
+; Launch daily log ("What I Did").  [2022 08 30]
+^!+l::
+  Run "C:\Users\johnbullock\Documents\config\What I did.url"
+  return
+
 ^!+w::
   Run "C:\Users\johnbullock\Documents\config\What I did.url"
   return
+  
 
 
 
@@ -885,6 +942,7 @@ return
 ; workaround
 ^!F10::
   SendInput ^!{F9}
+  Sleep 200
   SendInput ^!{Right}  
   return
   
@@ -965,6 +1023,49 @@ return
 ;
 ; #IfWinActive, ahk_group WinEdt
 ;   ^+k:: Return
+
+
+
+; #####################################################################
+; WORD SHORTCUTS
+; ##############################p#######################################
+#IfWinActive, ahk_group Word
+
+; For Word, the key seems to be to sleep a little as soon as the 
+; hotkey is pressed. Without doing that, the shortcuts won't work.
+; [2023 07 07]
+
+  ; Strikethrough of highlighted text. 
+  ^!+s::                    
+    Sleep 500
+    Send +{F10}
+    Send f
+    Send !k
+    SendInput {Enter}
+    return
+
+  ; Extend margin to end of page
+  ^!+x::                
+    Sleep 500  
+    Send +{F10}
+    Send {Down}{Down}{Down}{Down}
+    Send {Enter}
+    Send !r
+    SendInput -1
+    SendInput {Enter}
+    return
+
+    D
+
+; #####################################################################
+; WORKPLACE CHAT SHORTCUTS
+; #####################################################################
+; 
+; For the non-web app.
+
+#IfWinActive, ahk_group WorkplaceChat
+  ^+a::Return  ; disable Ctrl-Shift-A (Archive Chat)
+
 
 
 
