@@ -53,6 +53,7 @@ GroupAdd, GoogleSlides, - Google Slides -
 GroupAdd, LaTeX, Overleaf
 GroupAdd, LaTeX, WinEdt
 
+GroupAdd, Outlook, ahk_exe OUTLOOK.EXE
 GroupAdd, Outlook, johnbullock@meta.com - Outlook                   
 GroupAdd, Outlook, Microsoft Outlook
 
@@ -107,7 +108,7 @@ Loop {
   WinWaitActive, ahk_group Outlook
   Sleep, 450   ; 400 is a bit too short  [2022 11 25]
 
-  if WinActive("Tasks - johnbullock@meta.com - Outlook") {
+  if WinActive("Inbox - johngbullock@outlook.com - Outlook") {
     Send ^2
   }
 
@@ -247,6 +248,7 @@ ProcessExist(i) {
     return
 #IfWinActive
   ^!d::
+    Sleep 50   ; 2023-08-09: will this keep the "show desktop one monitor" shortcut from being triggered?
     Send %A_YYYY%
     Sleep 100  ; 75 may be too little in Word
     Send -
@@ -266,6 +268,7 @@ ProcessExist(i) {
 ; All else: use Unicode non-breaking spaces
 #IfWinActive, ahk_group Eclipse
   ^!+d::
+  Sleep 35  ; Will this help me to avoid triggering Ctrl-Shift-D, which shows the desktop?
   Send [%A_YYYY% 
   Sleep 100
   Send %A_MM% 
@@ -284,7 +287,7 @@ ProcessExist(i) {
   ^!+d::
   Send [%A_YYYY%{U+00A0}%A_MM%{U+00A0}%A_DD%] 
     ; U+00A0 is a Unicode non-breaking space
-    ; inserting Sleep commands doesn't make the spaces more likely to appear.  [2010 01 29]
+    ; inserting Sleep commands doesn't make the spaces more likely to appear.  [2020 01 29]
   return
 
 
@@ -307,7 +310,7 @@ CapsLock::SetCapsLockState, AlwaysOff
 ; ^CapsLock::Return
 ; +CapsLock::Return
 SetScrollLockState, AlwaysOff
-
+^+d::Return  ; helps Ctrl-Alt-Shift-D to be a date shortcut, without triggering "Show Desktop"
 
 ; Insert on the numeric keypad will still work when NumLock is off
 ; I haven't managed to set NumLock to an always-on state.  [2021 04 14]
@@ -751,9 +754,9 @@ NumpadSub::
 #IfWinActive
 ^!+3::
   Send !/
-  Sleep 75
+  Sleep 200  ; 150 seems to cause problems for Google Docs
   Send Custom line
-  Sleep 75
+  Sleep 200
   Send {Enter}
   Sleep 75
   Send {Tab}{Tab}{Tab}
@@ -761,6 +764,30 @@ NumpadSub::
   Send 3
   Send {Enter}
   return
+#IfWinActive
+
+
+; Format inline code as I want
+; 
+; 2023-07-18: NOT YET WORKING. The problem is that the shortcut is
+; Google's built-in shortcut for switching to comment-only mode. 
+; Sleeping before sending the first keystrokes doesn't solve this 
+; problem. How can I disable the Google default?  [2023 07 19]
+; #IfWinActive
+; ^!+c::
+;   Send !/
+;   Sleep 500
+;   Roboto   ; it breaks at this point
+;   Sleep 500 
+;   Send Mono
+;   Sleep 500
+;   Send {Enter}
+;   Sleep 500
+;   Send ^+,  ; reduce font size by one point
+;   return
+; #IfWinActive
+
+
 
 
 
@@ -920,12 +947,8 @@ return
 
 
 ; Launch daily log ("What I Did").  [2022 08 30]
-^!+l::
-  Run "C:\Users\johnbullock\Documents\config\What I did.url"
-  return
-
 ^!+w::
-  Run "C:\Users\johnbullock\Documents\config\What I did.url"
+  Run "C:\Users\jbullock\OneDrive\config\daily_log_OneNote.url"
   return
   
 
@@ -1048,14 +1071,14 @@ return
   ^!+x::                
     Sleep 500  
     Send +{F10}
-    Send {Down}{Down}{Down}{Down}
-    Send {Enter}
+    Send p
+    Send !i
     Send !r
     SendInput -1
     SendInput {Enter}
     return
 
-    D
+
 
 ; #####################################################################
 ; WORKPLACE CHAT SHORTCUTS
