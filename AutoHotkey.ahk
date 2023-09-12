@@ -250,7 +250,7 @@ ProcessExist(i) {
   ^!d::
     Sleep 50   ; 2023-08-09: will this keep the "show desktop one monitor" shortcut from being triggered?
     Send %A_YYYY%
-    Sleep 100  ; 75 may be too little in Word
+    Sleep 125  ; 100 may be too little in OneNote
     Send -
     Send %A_MM%
     Sleep 75

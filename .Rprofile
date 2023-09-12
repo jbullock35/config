@@ -40,7 +40,7 @@ local({
 # The policy below is like options(conflicts.policy = "depends.ok"), except that it 
 # adds, to "can.mask", the packages after "stats". The "mask.ok" argument means "it's 
 # OK for this package's command to mask objects that are already on the search path."
-# [2020Â 06Â 27, 2021 12 01]
+# [2020 06 27, 2021 12 01]
 options(conflicts.policy = list(
   error = TRUE,
   generics.ok = TRUE,
@@ -61,7 +61,7 @@ conflictRules(
 
 
 # Don't let the following commands mask or conflict with the corresponding 
-# tidyverse commands.  [2020Â 06Â 27]
+# tidyverse commands.  [2020 06 27]
 conflictRules("arm",        exclude = "rescale")   
 conflictRules("car",        exclude = "recode")                                  # use Recode() instead
 conflictRules("gridExtra",  exclude = "combine")   
@@ -110,20 +110,6 @@ options(todor_patterns = "TO DO")  # For the todor package / RStudio add-in
 # .PRECISION.T3600  <- Sys.info()['nodename']=='PS-GKHQ8V1'
 .THINKPAD.X1 <- Sys.info()['nodename']=='JOHNTHINKPADX1'
 
-
-
-# ELIMINATE THE "SAVE WORKSPACE IMAGE" QUESTION ON EXIT [2013 05 17]
-# Set hook to be run when Defaults is attached
-# setHook(
-#   packageEvent("Defaults", "attach"),
-#   function(...) { 
-#     setDefaults(q, save="no")
-#     useDefaults(q) 
-#   }
-# )
-# Add Defaults to the default packages loaded on startup
-# old <- getOption("defaultPackages");
-# options(defaultPackages = c(old, "Defaults"))
 
 
 # ADD AN ERROR-CHECKING OPTION
